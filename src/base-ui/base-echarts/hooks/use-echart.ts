@@ -20,7 +20,7 @@ export function useEchart(el: HTMLElement): InitEchart {
   const resizeObserver = new ResizeObserver(() => updateSize())
   resizeObserver.observe(el)
 
-  onMounted(() => resizeObserver.disconnect())
+  onUnmounted(() => resizeObserver.disconnect())
 
   return { echarts, echartInstance, setOptions, updateSize }
 }

@@ -9,6 +9,8 @@ module.exports = {
   overrides: [{ files: ["**/*.(html|vue)"], customSyntax: "postcss-html" }],
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts", "**/*.json", "**/*.md", "**/*.yaml"],
   rules: {
+    "selector-class-pattern": null,
+
     "order/properties-order": [
       // 定位
       "position",

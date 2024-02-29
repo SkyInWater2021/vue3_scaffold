@@ -11,7 +11,7 @@ const handleFold = () => (isFold.value = !isFold.value)
 </script>
 
 <template>
-  <div class="com-scrollbar__hide flex h-full flex-col">
+  <div class="com-scrollbar-hide flex h-full flex-col">
     <header class="com-floodlit-box relative">
       <main-header :style="{ height: headerHeight }" />
 
