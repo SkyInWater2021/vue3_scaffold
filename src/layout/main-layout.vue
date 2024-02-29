@@ -4,18 +4,18 @@ import MainMenu from "./main-menu/main-menu.vue"
 
 const headerHeight = "55px"
 const menuWidth = "150px"
-const delay = "300ms"
+const delay = "100ms"
 
 const isFold = ref(false)
 const handleFold = () => (isFold.value = !isFold.value)
 </script>
 
 <template>
-  <div class="flex h-full flex-col">
+  <div class="com-scrollbar__hide flex h-full flex-col">
     <header class="com-floodlit-box relative">
       <main-header :style="{ height: headerHeight }" />
 
-      <div class="fold-container text-linear">
+      <div class="fold-container">
         <IconEpExpand v-if="isFold" @click="handleFold" />
         <IconEpFold v-else @click="handleFold" />
       </div>
@@ -24,7 +24,7 @@ const handleFold = () => (isFold.value = !isFold.value)
     <div class="com-scrollbar-hide flex flex-1">
       <aside
         class="com-scrollbar-hide com-floodlit-box py-2.5"
-        :style="{ width: isFold ? '0' : menuWidth, transition: `width ${delay} linear` }"
+        :style="{ width: isFold ? '0' : menuWidth, transition: `width ${delay} ease-out` }"
       >
         <main-menu />
       </aside>

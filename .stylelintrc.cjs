@@ -4,16 +4,9 @@ module.exports = {
     "stylelint-prettier/recommended",
     "stylelint-config-standard-vue",
     "stylelint-config-tailwindcss",
-
-    // ! 项目不使用less
-    // "stylelint-config-recommended-less",
   ],
   plugins: ["stylelint-prettier", "stylelint-order"],
-  overrides: [
-    // ! 项目不使用less
-    // { files: ["**/*.(less|css|vue|html)"], customSyntax: "postcss-less" },
-    { files: ["**/*.(html|vue)"], customSyntax: "postcss-html" },
-  ],
+  overrides: [{ files: ["**/*.(html|vue)"], customSyntax: "postcss-html" }],
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts", "**/*.json", "**/*.md", "**/*.yaml"],
   rules: {
     "order/properties-order": [

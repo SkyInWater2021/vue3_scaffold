@@ -4,6 +4,7 @@
   /*  * 添加自定义base */
 
   body {
+    overflow: hidden; /*  防止echarts的tooltip移入时抖动 */
     font-size: 14px;
     color: var(--el-text-color-primary);
   }

@@ -32,8 +32,8 @@ button:hover,
 button.is-active {
   color: white;
   box-shadow:
-    inset 0 0 10px rgba(#80aff4, 1),
-    0 0 20px 3px rgba(#80aff4, 0.2);
+    inset 0 0 10px rgb(128 175 244 / 100%),
+    0 0 20px 3px rgb(128 175 244 / 20%);
 }
 
 button::before {

@@ -19,6 +19,10 @@ module.exports = {
   settings: {
     "import/resolver": {
       typeScript: true,
+      alias: {
+        map: [["@", "./src"]],
+        extensions: [".ts", ".js", ".jsx", ".json", ".vue"],
+      },
     },
   },
 
