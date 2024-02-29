@@ -13,16 +13,12 @@ module.exports = {
     "plugin:vue/vue3-essential",
     "plugin:prettier/recommended",
     "plugin:import/typescript",
-    ".eslintrc-auto-import.json",
+    "./types/.eslintrc-auto-import.json",
   ],
 
   settings: {
     "import/resolver": {
       typeScript: true,
-      // alias: {
-      //   map: [["@", "./src"]],
-      //   extensions: [".ts", ".js", ".jsx", ".json", ".vue"],
-      // },
     },
   },
 
@@ -35,6 +31,8 @@ module.exports = {
   plugins: ["@typescript-eslint", "vue", "import"],
 
   rules: {
+    "vue/multi-word-component-names": "off",
+
     "import/order": [
       "error",
       {
@@ -66,4 +64,4 @@ module.exports = {
       },
     ],
   },
-};
+}

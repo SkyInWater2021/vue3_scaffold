@@ -1,13 +1,17 @@
 module.exports = {
   extends: [
     "stylelint-config-standard",
-    "stylelint-config-recommended-less",
     "stylelint-prettier/recommended",
     "stylelint-config-standard-vue",
+    "stylelint-config-tailwindcss",
+
+    // ! 项目不使用less
+    // "stylelint-config-recommended-less",
   ],
   plugins: ["stylelint-prettier", "stylelint-order"],
   overrides: [
-    { files: ["**/*.(less|css|vue|html)"], customSyntax: "postcss-less" },
+    // ! 项目不使用less
+    // { files: ["**/*.(less|css|vue|html)"], customSyntax: "postcss-less" },
     { files: ["**/*.(html|vue)"], customSyntax: "postcss-html" },
   ],
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts", "**/*.json", "**/*.md", "**/*.yaml"],
@@ -157,4 +161,4 @@ module.exports = {
       "visibility",
     ],
   },
-};
+}

@@ -1,0 +1,27 @@
+@tailwind base;
+
+@layer base {
+  /*  * 添加自定义base */
+
+  body {
+    font-size: 14px;
+    color: var(--el-text-color-primary);
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  img {
+    vertical-align: top;
+  }
+}

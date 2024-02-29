@@ -1,0 +1,7 @@
+{
+  "cache": 1,
+  "code": 200,
+  "msg": "正常",
+  "data": "redis.max.memory,redis.mem.used,redis.max.used.memory.pct,redis.memory.total_system_memory",
+  "total": 0
+}

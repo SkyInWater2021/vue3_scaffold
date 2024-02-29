@@ -1,0 +1,107 @@
+{
+  "cache": 1,
+  "code": 200,
+  "msg": "正常",
+  "data": [
+    {
+      "FILESIZE_COUNT": 26974402450987,
+      "FILESIZE_AVG": 102965834785082,
+      "DATA_TYPE": null,
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": null,
+      "DATA_PCT_TYPE": 2,
+      "DATA_PCT": -0.738
+    },
+    {
+      "FILESIZE_COUNT": 9364152,
+      "FILESIZE_AVG": 12890540,
+      "DATA_TYPE": "A.0001.0009.R002",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "区域站地面观测资料(川藏铁路国铁自建站）",
+      "DATA_PCT_TYPE": 1,
+      "DATA_PCT": -0.2736
+    },
+    {
+      "FILESIZE_COUNT": 9364152,
+      "FILESIZE_AVG": 16297127,
+      "DATA_TYPE": "A.0001.0009.R002",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "区域站地面观测资料(川藏铁路国铁自建站）",
+      "DATA_PCT_TYPE": 2,
+      "DATA_PCT": -0.4254
+    },
+    {
+      "FILESIZE_COUNT": 12665804,
+      "FILESIZE_AVG": 19500055,
+      "DATA_TYPE": "A.0001.0007.R002",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "香港地面原始TAC报文（临时）",
+      "DATA_PCT_TYPE": 2,
+      "DATA_PCT": -0.3505
+    },
+    {
+      "FILESIZE_COUNT": 12665804,
+      "FILESIZE_AVG": 24061729,
+      "DATA_TYPE": "A.0001.0007.R002",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "香港地面原始TAC报文（临时）",
+      "DATA_PCT_TYPE": 2,
+      "DATA_PCT": -0.4736
+    },
+    {
+      "FILESIZE_COUNT": 69041263,
+      "FILESIZE_AVG": 71925261,
+      "DATA_TYPE": "A.0001.0018.R001",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "地面定时天气报(ISM/ISN/ISA/ISI)",
+      "DATA_PCT_TYPE": 0,
+      "DATA_PCT": -0.0401
+    },
+    {
+      "FILESIZE_COUNT": 1269083,
+      "FILESIZE_AVG": 1603289,
+      "DATA_TYPE": "A.0001.0021.R001",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "海洋测站的地面观测报告（ISS）",
+      "DATA_PCT_TYPE": 1,
+      "DATA_PCT": -0.2085
+    },
+    {
+      "FILESIZE_COUNT": 1269083,
+      "FILESIZE_AVG": 2010653,
+      "DATA_TYPE": "A.0001.0021.R001",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "海洋测站的地面观测报告（ISS）",
+      "DATA_PCT_TYPE": 2,
+      "DATA_PCT": -0.3688
+    },
+    {
+      "FILESIZE_COUNT": 6022708,
+      "FILESIZE_AVG": 1767749,
+      "DATA_TYPE": "A.0001.0010.R001",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "地面自动站降水量资料",
+      "DATA_PCT_TYPE": 2,
+      "DATA_PCT": 2.407
+    },
+    {
+      "FILESIZE_COUNT": 11539131,
+      "FILESIZE_AVG": 20197682,
+      "DATA_TYPE": "A.0001.0005.R001",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "机场地面天气报（SA/SP）",
+      "DATA_PCT_TYPE": 2,
+      "DATA_PCT": -0.4287
+    },
+    {
+      "FILESIZE_COUNT": 653673543,
+      "FILESIZE_AVG": 981269670,
+      "DATA_TYPE": "A.0001.0009.R001",
+      "PERIOD_DATE": 20240121,
+      "DATA_TYPE_NAME": "地面自动站气象要素资料(区域站)（旧Z，质控前）",
+      "DATA_PCT_TYPE": 2,
+      "DATA_PCT": -0.3338
+    }
+  ],
+  "total": 718
+}

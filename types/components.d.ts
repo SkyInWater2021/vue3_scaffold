@@ -7,6 +7,32 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./../src/components/HelloWorld.vue')['default']
+    CodeList: typeof import('./../src/components/page-list/code-list.vue')['default']
+    ContentTitle: typeof import('./../src/components/content-title.vue')['default']
+    CylinderBar: typeof import('./../src/components/page-chart/cylinder-bar.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElCard: typeof import('element-plus/es')['ElCard']
+    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
+    ElRadio: typeof import('element-plus/es')['ElRadio']
+    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
+    ElTag: typeof import('element-plus/es')['ElTag']
+    FloodlitBtn: typeof import('./../src/components/floodlit-btn.vue')['default']
+    IconEpExpand: typeof import('~icons/ep/expand')['default']
+    IconEpFold: typeof import('~icons/ep/fold')['default']
+    IconEpRefresh: typeof import('~icons/ep/refresh')['default']
+    RealTime: typeof import('./../src/components/real-time.vue')['default']
+    RhombusBar: typeof import('./../src/components/page-chart/rhombus-bar.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
+    ShineCard: typeof import('./../src/components/shine-card.vue')['default']
+    SingleCodeList: typeof import('./../src/components/page-list/single-code-list.vue')['default']
+    SingleTendencyLine: typeof import('./../src/components/page-chart/single-tendency-line.vue')['default']
+    SkyBtn: typeof import('./../src/components/page-btn/sky-btn.vue')['default']
+    TendencyLine: typeof import('./../src/components/page-chart/tendency-line.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

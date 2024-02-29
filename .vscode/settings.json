@@ -12,17 +12,23 @@
   "css.validate": false,
   "less.validate": false,
   "cSpell.words": [
-    "vusion",
-    "stylelint",
-    "pnpm",
-    "unplugin",
-    "commitlint",
-    "pinia",
-    "vite",
-    "preinstall",
-    "unocss",
     "attributify",
-    "vueuse"
+    "commitlint",
+    "iconify",
+    "msword",
+    "officedocument",
+    "openxmlformats",
+    "pinia",
+    "pnpm",
+    "preinstall",
+    "spreadsheetml",
+    "stylelint",
+    "unocss",
+    "unplugin",
+    "vite",
+    "vueuse",
+    "vusion",
+    "wordprocessingml"
   ],
   "path-intellisense.mappings": {
     "@": "${workspaceRoot}/src"

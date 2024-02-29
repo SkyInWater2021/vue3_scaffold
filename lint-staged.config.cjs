@@ -8,4 +8,4 @@ module.exports = {
   "*.{scss,less,html,css}": ["stylelint --fix", "prettier --write"],
 
   "*.md": ["prettier --write"],
-};
+}

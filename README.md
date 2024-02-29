@@ -29,3 +29,10 @@ pnpm lint:eslint # 代码格式校验
 - 自动导入插件
 
 - import 语句自动整理
+
+## 项目需要使用less的依赖
+
+"less": "^4.2.0",
+"postcss-less": "^6.0.0",
+"stylelint-less": "^3.0.1",
+"stylelint-config-recommended-less": "^3.0.1",

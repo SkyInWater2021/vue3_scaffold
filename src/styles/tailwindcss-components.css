@@ -1,0 +1,10 @@
+@tailwind components;
+
+@layer components {
+  /*  * 添加自定义components */
+
+  .text-linear {
+    @apply font-bold text-transparent;
+    @apply bg-gradient-to-b from-white to-global-blue bg-clip-text;
+  }
+}
