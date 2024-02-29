@@ -66,7 +66,7 @@ defineExpose({
       :count="tableTotal"
     >
       <template #hostIp="scope">
-        <span @click="handleTagAdd(scope)" class="cursor-pointer">{{ scope.hostIp }}</span>
+        <span @click="handleTagAdd(scope)" class="hole-enable">{{ scope.hostIp }}</span>
       </template>
     </BaseTable>
   </div>

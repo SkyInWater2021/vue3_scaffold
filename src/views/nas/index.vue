@@ -1,5 +1,9 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import TableList from "./c-cpns/table-list.vue"
+</script>
 
 <template>
-  <div class="">资源</div>
+  <div class="flex h-full flex-col">
+    <TableList />
+  </div>
 </template>

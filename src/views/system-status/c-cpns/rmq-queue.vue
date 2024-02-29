@@ -91,7 +91,7 @@ defineExpose({
       :count="tableTotal"
     >
       <template #queueName="scope">
-        <span @click="handleNameClick(scope)" class="cursor-pointer">{{ scope.queueName }}</span>
+        <span @click="handleNameClick(scope)" class="hole-enable">{{ scope.queueName }}</span>
       </template>
     </BaseTable>
 

@@ -20,13 +20,15 @@ const tableTotal = ref(0)
 const loading = ref(false)
 const fetchTime = ref<string>()
 function fetchListData() {
-  // if (import.meta.env.DEV) {
-  //   const res = await import("@/views/a-json/3.5.dist.json")
-  //   tableResponseData.value = res?.data as unknown as DataTransItem[]
-  //   tableTotal.value = res.total ?? 0
-  //   loading.value = false
-  //   return
-  // }
+  if (import.meta.env.DEV) {
+    import("@/views/a-json/3.5.dist.json").then(res => {
+      tableResponseData.value = res?.data as unknown as DataTransItem[]
+      tableTotal.value = res.total ?? 0
+      loading.value = false
+    })
+
+    return
+  }
 
   loading.value = true
   dataTransApi
@@ -106,7 +108,7 @@ onMounted(() => fetchListData())
         </template>
 
         <template #expand="scope">
-          <div class="com-floodlit-box p-2.5">
+          <div class="com-floodlit-box px-5 py-2.5">
             <BaseTable :config="currentExpandTableConfig" :data="JSON.parse(scope.detail)">
               <template #fileSizeCount="scope">
                 <span>{{ addCommasToNumber(scope["FILESIZE_COUNT"]) }} Byte</span>

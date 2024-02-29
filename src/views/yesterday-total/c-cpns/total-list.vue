@@ -28,16 +28,18 @@ async function fetchListData() {
   if (!tableRef.value) return
 
   // if (import.meta.env.DEV) {
-  //   const res = await (currentType.value.includes('收集')
-  //     ? import('@/views/a-json/3.6.col.sum.json')
-  //     : import('@/views/a-json/3.6.dist.sum.json'))
+  //   const res = await (currentType.value.includes("收集")
+  //     ? import("@/views/a-json/3.6.col.sum.json")
+  //     : import("@/views/a-json/3.6.dist.sum.json"))
 
-  //   tableData.value = (res?.data ?? []).filter((item) => {
+  //   tableData.value = (res?.data ?? []).filter(item => {
   //     if (item.DATA_TYPE === null) currentTotalInfo.value = { ...item }
   //     return item.DATA_TYPE !== null
   //   })
   //   tableTotal.value = res?.total ?? 0
-  //   fetchTime.value = dateOffset({utc:true, format: 'HH:mm:ss' })
+  //   fetchTime.value = dateOffset({ utc: true, format: "HH:mm:ss" })
+
+  //   return
   // }
 
   const { currentPage, pageSize } = tableRef.value
@@ -126,7 +128,7 @@ onMounted(() => fetchListData())
     <div ref="tableContainerRef" v-loading="tableLoading" class="flex-1">
       <BaseTable ref="tableRef" :config="currentTableConfig" :data="tableData" :count="tableTotal">
         <template #dataType="scope">
-          <span class="custom-type" @click="handleTypeClick(scope)">{{ scope["DATA_TYPE"] }}</span>
+          <span class="hole-enable" @click="handleTypeClick(scope)">{{ scope["DATA_TYPE"] }}</span>
         </template>
 
         <template #total="scope">
@@ -144,17 +146,3 @@ onMounted(() => fetchListData())
     </div>
   </div>
 </template>
-
-<style scoped>
-.custom-type:hover {
-  font-weight: 600;
-  color: white;
-  text-shadow: 1px 1px 2px var(--global-blue);
-  cursor: pointer;
-}
-
-:deep(.el-table .cell) {
-  padding: 0 4px;
-  font-size: 12px;
-}
-</style>

@@ -166,7 +166,7 @@ onMounted(() => fetchListData())
     <div ref="tableContainerRef" v-loading="tableLoading" class="flex-1">
       <BaseTable ref="tableRef" :config="currentTableConfig" :data="tableData" :count="tableTotal">
         <template #type="scope">
-          <span class="custom-type" @click="handleTypeClick(scope)">{{ scope.type }}</span>
+          <span class="hole-enable" @click="handleTypeClick(scope)">{{ scope.type }}</span>
         </template>
 
         <template #sizeTendency="scope" v-if="currentType.includes('大小')">
@@ -215,13 +215,6 @@ onMounted(() => fetchListData())
 </template>
 
 <style scoped>
-.custom-type:hover {
-  font-weight: 600;
-  color: white;
-  text-shadow: 1px 1px 2px var(--global-blue);
-  cursor: pointer;
-}
-
 :deep(.el-table .cell) {
   padding: 0 4px;
   font-size: 12px;

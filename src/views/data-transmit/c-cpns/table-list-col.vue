@@ -20,10 +20,12 @@ const fetchTime = ref<string>()
 
 function fetchListData() {
   // if (import.meta.env.DEV) {
-  //   const res = await import('@/views/a-json/3.5.col.json')
-  //   tableResponseData.value = res?.data
-  //   tableTotal.value = res.total ?? 0
-  //   loading.value = false
+  //   import("@/views/a-json/3.5.col.json").then(res => {
+  //     tableResponseData.value = res?.data
+  //     tableTotal.value = res.total ?? 0
+  //     loading.value = false
+  //   })
+
   //   return
   // }
 

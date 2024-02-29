@@ -90,7 +90,7 @@ defineExpose({
       :count="tableTotal"
     >
       <template #channelName="scope">
-        <span @click="handleNameClick(scope)" class="cursor-pointer">{{ scope.channelName }}</span>
+        <span @click="handleNameClick(scope)" class="hole-enable">{{ scope.channelName }}</span>
       </template>
     </BaseTable>
 
