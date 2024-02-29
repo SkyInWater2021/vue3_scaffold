@@ -39,7 +39,7 @@ async function fetchListData() {
       if (res?.code === 200) {
         tableData.value = res?.data ?? []
         tableTotal.value = res?.total ?? 0
-        fetchTime.value = dateOffset({ offset: -8, format: "HH:mm:ss" })
+        fetchTime.value = dateOffset({ utc: true, format: "HH:mm:ss" })
       }
     })
     .catch(error => console.error(error))

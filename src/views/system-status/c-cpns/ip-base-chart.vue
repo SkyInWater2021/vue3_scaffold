@@ -30,7 +30,7 @@ async function fetchData() {
       : import("@/views/a-json/3.8.3.redis.每5分钟.json"))
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     responseData.value = res.data as unknown as any
-    fetchTime.value = dateOffset({ offset: -8, format: "HH:mm:ss" })
+    fetchTime.value = dateOffset({ utc: true, format: "HH:mm:ss" })
     return
   }
 
@@ -63,7 +63,7 @@ async function fetchData() {
 
     if (res?.code === 200) {
       responseData.value = res?.data ?? []
-      fetchTime.value = dateOffset({ offset: -8, format: "HH:mm:ss" })
+      fetchTime.value = dateOffset({ utc: true, format: "HH:mm:ss" })
     }
     fetchLoading.value = false
   } catch (error) {
@@ -139,7 +139,7 @@ fetchData()
             </el-radio>
           </el-radio-group>
 
-          <FetchTime :loading="fetchLoading" @refresh="fetchData" :time="fetchTime" width="160px">
+          <FetchTime :loading="fetchLoading" @refresh="fetchData" :time="fetchTime" width="170px">
             <IconEpCircleClose
               v-if="isFullScreen"
               class="ml-2.5 cursor-pointer"

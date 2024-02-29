@@ -40,7 +40,7 @@ function fetchListData() {
       if (res?.code === 200) {
         tableResponseData.value = res?.data?.list
         tableTotal.value = res?.data?.total ?? 0
-        fetchTime.value = dateOffset({ offset: -8, format: "HH:mm:ss" })
+        fetchTime.value = dateOffset({ utc: true, format: "HH:mm:ss" })
       }
     })
     .catch(error => console.error(error))
