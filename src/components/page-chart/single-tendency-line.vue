@@ -12,7 +12,7 @@ const props = defineProps<{
 const axisData = computed(() => {
   const xAxisData = (props.tableData ?? [])
     .filter((item: { type?: string }) => !item.type)
-    .map(item => item.date + props.columnLabel ?? "")
+    .map(item => item.date + (props.columnLabel ?? ""))
 
   const yData = (props.tableData ?? []).map(item => {
     if (props.type === "singleCount") {

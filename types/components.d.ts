@@ -10,13 +10,10 @@ declare module 'vue' {
     CodeList: typeof import('./../src/components/page-list/code-list.vue')['default']
     ContentTitle: typeof import('./../src/components/content-title.vue')['default']
     CylinderBar: typeof import('./../src/components/page-chart/cylinder-bar.vue')['default']
-    ElButton: typeof import('element-plus/es')['ElButton']
-    ElCard: typeof import('element-plus/es')['ElCard']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDivider: typeof import('element-plus/es')['ElDivider']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
@@ -43,7 +40,6 @@ declare module 'vue' {
     ShineCard: typeof import('./../src/components/shine-card.vue')['default']
     SingleCodeList: typeof import('./../src/components/page-list/single-code-list.vue')['default']
     SingleTendencyLine: typeof import('./../src/components/page-chart/single-tendency-line.vue')['default']
-    SkyBtn: typeof import('./../src/components/page-btn/sky-btn.vue')['default']
     TendencyLine: typeof import('./../src/components/page-chart/tendency-line.vue')['default']
   }
   export interface ComponentCustomProperties {
