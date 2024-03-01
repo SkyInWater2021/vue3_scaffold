@@ -9,6 +9,7 @@ import type { ListResponseItem } from "@/services/source/types"
 import { dateOffset } from "@/utils"
 
 import { tableConfig } from "../config/table"
+import { useFetchInfo } from "../use-fetch-info"
 
 const emit = defineEmits(["tagAdd"])
 
@@ -21,13 +22,12 @@ const tableRef = ref<InstanceType<typeof BaseTable>>()
 const tableData = ref<ListResponseItem[]>([])
 const tableTotal = ref(0)
 const tableLoading = ref(false)
-const fetchTime = ref<string>()
+const fetchTime = ref<string>("")
 
 async function fetchListData() {
   if (!tableRef.value) return
 
   tableLoading.value = true
-
   sourceApi
     .queryThirdResourceList({ hostIp: currentHostIp.value })
     .then(res => {
@@ -41,6 +41,8 @@ async function fetchListData() {
     .catch(error => console.error(error))
     .finally(() => (tableLoading.value = false))
 }
+
+useFetchInfo(fetchTime, tableLoading, fetchListData)
 
 // ===== 单元格合并 =====
 const hostIpSpanRecord = ref<number[]>([])
@@ -104,12 +106,6 @@ useTableResizeObserver(tableContainerRef, currentTableConfig, 40)
 
 addTableEvents()
 onMounted(() => fetchListData())
-
-defineExpose({
-  fetchListData,
-  fetchTime,
-  tableLoading,
-})
 </script>
 
 <template>
@@ -120,6 +116,7 @@ defineExpose({
         v-model="currentHostIp"
         placeholder="请输入主机IP"
         class="!w-[200px]"
+        clearable
         @change="fetchListData"
       />
     </div>

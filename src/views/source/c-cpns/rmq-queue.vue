@@ -8,6 +8,7 @@ import type { RMQQueueResponse } from "@/services/system-status/types"
 import { dateOffset } from "@/utils"
 
 import { RMQTableQueueConfig } from "../config/table"
+import { useFetchInfo } from "../use-fetch-info"
 
 import LineChart from "./rmq-chart.vue"
 
@@ -27,6 +28,7 @@ function fetchListData() {
   if (!tableRef.value) return
   const { currentPage, pageSize } = tableRef.value
   tableLoading.value = true
+
   systemStatusFRApi
     .queryThirdRmqArgLists({
       limit: pageSize,
@@ -45,6 +47,8 @@ function fetchListData() {
     .catch(error => console.error(error))
     .finally(() => (tableLoading.value = false))
 }
+
+useFetchInfo(fetchTime, tableLoading, fetchListData)
 
 const modalConfig: ModalConfig = reactive({
   title: "demo",
@@ -73,16 +77,10 @@ currentTableConfig.tableConfig["onSort-change"] = ({ prop, order }) => {
 
 useTableResizeObserver(tableContainerRef, currentTableConfig)
 onMounted(() => fetchListData())
-
-defineExpose({
-  fetchListData,
-  fetchTime,
-  tableLoading,
-})
 </script>
 
 <template>
-  <div ref="tableContainerRef" v-loading="tableLoading">
+  <div ref="tableContainerRef" v-loading="tableLoading" class="h-full">
     <BaseTable
       ref="tableRef"
       :config="currentTableConfig"

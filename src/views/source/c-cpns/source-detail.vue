@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { ContentTitle, FetchTime } from "@/components"
+import { ContentTitle } from "@/components"
+import { useSourceStore } from "@/store/source"
 
 type CodeType = Record<string, string>
 
+const sourceStore = useSourceStore()
 const radioOptions = reactive([
   {
     label: "IP列表",
@@ -44,7 +46,7 @@ const handleTagClear = () => {
   tags.value.length = 0
 }
 
-const cpnRef = ref()
+watch(currentType, sourceStore.resetFetchInfo)
 </script>
 
 <template>
@@ -79,22 +81,23 @@ const cpnRef = ref()
         </template>
 
         <FetchTime
-          v-if="cpnRef?.fetchTime"
-          :loading="cpnRef?.tableLoading"
-          :time="cpnRef?.fetchTime"
-          @refresh="cpnRef?.fetchListData"
+          v-if="sourceStore.fetchTime"
+          :loading="sourceStore.fetchLoading"
+          :time="sourceStore.fetchTime"
+          @refresh="sourceStore.refresh?.fn"
         />
       </div>
     </ContentTitle>
 
-    <div class="flex-1">
-      <component
-        ref="cpnRef"
-        class="h-full"
-        :is="currentTag?.cpn"
-        :code="currentTag?.code ?? {}"
-        @tagAdd="handleTagAdd"
-      />
+    <div class="com-scrollbar-hide flex-1">
+      <KeepAlive>
+        <component
+          class="h-full"
+          :is="currentTag?.cpn"
+          :code="currentTag?.code ?? {}"
+          @tagAdd="handleTagAdd"
+        />
+      </KeepAlive>
     </div>
   </div>
 </template>

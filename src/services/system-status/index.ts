@@ -131,13 +131,13 @@ class FlumeAndRMQ {
     if (import.meta.env.DEV) {
       return sRequestInstance.post<GlobalResponse<FlumeQueueResponse>>({
         url: `/api/v1/communicationSystem/queryThirdFlumeArgLists`,
-        data,
+        data: { ...data, port: data.port ? data.port : null },
       })
     }
 
     return requestInstance.post<GlobalResponse<FlumeQueueResponse>>({
       url: `/api/flume/args`,
-      data,
+      data: { ...data, port: data.port ? data.port : null },
     })
   }
 

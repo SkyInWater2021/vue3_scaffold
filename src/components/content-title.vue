@@ -13,7 +13,7 @@ defineProps<{ title?: string; width?: string }>()
 <style scoped>
 .page-title {
   --btn-bg-1: #344e7e;
-  --btn-bg-2: #5a9cf8;
+  --btn-bg-2: #477eca;
   --clr-font-main: hsla(0deg 0% 20% / 10000%);
   --btn-bg-color: hsla(360deg 100% 100% / 100%);
   --radii: 0.3em;

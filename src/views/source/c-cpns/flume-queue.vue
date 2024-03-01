@@ -4,31 +4,32 @@ import { cloneDeep } from "lodash-es"
 import { BaseModal, BaseTable, ModalConfig } from "@/base-ui"
 import { useTableResizeObserver } from "@/hooks"
 import { systemStatusFRApi } from "@/services"
-import type { RMQQueueResponse } from "@/services/system-status/types"
+import type { FlumeQueueResponse } from "@/services/system-status/types"
 import { dateOffset } from "@/utils"
 
-import { RMQTableQueueConfig } from "../config/table"
+import { FlumeTableQueueConfig } from "../config/table"
+import { useFetchInfo } from "../use-fetch-info"
 
-import LineChart from "./rmq-chart.vue"
+import LineChart from "./flume-chart.vue"
 
 const props = defineProps<{ code: Record<string, string> }>()
 
-const currentTableConfig = reactive(cloneDeep(RMQTableQueueConfig))
+const currentTableConfig = reactive(cloneDeep(FlumeTableQueueConfig))
 
 const fetchTime = ref("")
 const tableContainerRef = ref<HTMLDivElement>()
 const tableRef = ref<InstanceType<typeof BaseTable>>()
-const tableResponseData = ref<RMQQueueResponse["list"]>()
+const tableResponseData = ref<FlumeQueueResponse["list"]>()
 const tableTotal = ref(0)
 const tableLoading = ref(false)
 const sortInfo = reactive({ sortName: "", sortType: "" })
-
 function fetchListData() {
   if (!tableRef.value) return
+
   const { currentPage, pageSize } = tableRef.value
   tableLoading.value = true
   systemStatusFRApi
-    .queryThirdRmqArgLists({
+    .queryThirdFlumeArgLists({
       limit: pageSize,
       page: currentPage,
       hostIp: props.code.hostIp,
@@ -46,6 +47,8 @@ function fetchListData() {
     .finally(() => (tableLoading.value = false))
 }
 
+useFetchInfo(fetchTime, tableLoading, fetchListData)
+
 const modalConfig: ModalConfig = reactive({
   title: "demo",
   width: "80%",
@@ -53,9 +56,9 @@ const modalConfig: ModalConfig = reactive({
 
 const chartPayload = ref()
 const modalRef = ref<InstanceType<typeof BaseModal>>()
-function handleNameClick(rowData: RMQQueueResponse["list"][0]) {
+function handleNameClick(rowData: FlumeQueueResponse["list"][0]) {
   if (!modalRef.value) return
-  modalConfig.title = rowData.queueName
+  modalConfig.title = rowData.channelName
   chartPayload.value = { ...rowData, ...props.code }
   modalRef.value.changeVisible(true)
 }
@@ -73,24 +76,18 @@ currentTableConfig.tableConfig["onSort-change"] = ({ prop, order }) => {
 
 useTableResizeObserver(tableContainerRef, currentTableConfig)
 onMounted(() => fetchListData())
-
-defineExpose({
-  fetchListData,
-  fetchTime,
-  tableLoading,
-})
 </script>
 
 <template>
-  <div ref="tableContainerRef" v-loading="tableLoading">
+  <div ref="tableContainerRef" v-loading="tableLoading" class="h-full">
     <BaseTable
       ref="tableRef"
       :config="currentTableConfig"
       :data="tableResponseData"
       :count="tableTotal"
     >
-      <template #queueName="scope">
-        <span @click="handleNameClick(scope)" class="hole-enable">{{ scope.queueName }}</span>
+      <template #channelName="scope">
+        <span @click="handleNameClick(scope)" class="hole-enable">{{ scope.channelName }}</span>
       </template>
     </BaseTable>
 
