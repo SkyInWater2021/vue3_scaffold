@@ -6,11 +6,6 @@ module.exports = {
       colors: {
         global: {
           blue: "var(--global-blue)",
-          "blue-light": "var(--global-blue-light)",
-          "blue-lighter": "var(--global-blue-lighter)",
-          "blue-lightest": "var(--global-blue-lightest)",
-          "blue-dark": "var(--global-blue-dark)",
-          "blue-darker": "var(--global-blue-darker)",
         },
       },
     },

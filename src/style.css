@@ -1,14 +1,7 @@
 @import url("./styles/tailwindcss-base.css");
 @import url("./styles/tailwindcss-components.css");
 @import url("./styles/tailwindcss-utilities.css");
-@import url("./styles//ele-theme.css");
-@import url("./styles/global-class.css");
 
 :root {
   --global-blue: rgb(101 142 210);
-  --global-blue-light: rgb(185 214 255);
-  --global-blue-lighter: rgb(217 232 255);
-  --global-blue-lightest: rgb(245 249 255);
-  --global-blue-dark: rgb(43 70 122);
-  --global-blue-darker: rgb(31 53 95);
 }

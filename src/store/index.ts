@@ -5,8 +5,8 @@ const pinia = createPinia()
 function registerStore(app: App<Element>) {
   app.use(pinia)
 
-  // todo do something
-  // ...
+  // ? do something
+  // * ...
 }
 
 export default registerStore
