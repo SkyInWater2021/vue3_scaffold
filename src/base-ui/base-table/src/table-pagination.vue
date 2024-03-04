@@ -1,7 +1,6 @@
 <script lang="ts" setup>
+import { PaginationConfig } from "../types/pagination"
 import { filterPaginationConfig } from "../utils/filter-config"
-
-import type { PaginationConfig } from "../types/pagination"
 
 type ModelEvent = "update:currentPage" | "update:pageSize"
 

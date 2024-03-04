@@ -1,5 +1,5 @@
-import type { DialogEmits, DialogProps } from "element-plus"
-import type { CSSProperties } from "vue"
+import { DialogEmits, DialogProps } from "element-plus"
+import { CSSProperties } from "vue"
 
 // 从类型T中移除readonly修饰符
 type EraseReadonly<T> = {

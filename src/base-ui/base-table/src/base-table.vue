@@ -1,11 +1,11 @@
 <script lang="ts" setup>
+import { TableInstance } from "element-plus"
 import { onMounted, ref, watchEffect } from "vue"
+
+import { BaseTableConfig, TableData, TableItemConfig } from "../types/table"
 
 import TableMain from "./table-main.vue"
 import TablePagination from "./table-pagination.vue"
-
-import type { BaseTableConfig, TableData, TableItemConfig } from "../types/table"
-import type { TableInstance } from "element-plus"
 
 // 组件接收属性
 const props = defineProps<{

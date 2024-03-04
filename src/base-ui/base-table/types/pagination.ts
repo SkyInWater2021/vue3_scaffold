@@ -1,6 +1,7 @@
-import type { EraseReadonly } from "./common"
-import type { PaginationEmits, PaginationProps } from "element-plus"
-import type { CSSProperties } from "vue"
+import { PaginationEmits, PaginationProps } from "element-plus"
+import { CSSProperties } from "vue"
+
+import { EraseReadonly } from "./common"
 
 // 分页器事件类型
 type EmitEvents = Omit<PaginationEmits, "update:current-page" | "update:page-size">

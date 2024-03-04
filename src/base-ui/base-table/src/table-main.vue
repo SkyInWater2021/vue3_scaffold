@@ -1,10 +1,9 @@
 <script lang="ts" setup>
+import { TableInstance } from "element-plus"
 import { onMounted, ref } from "vue"
 
+import { TableConfig, TableData } from "../types/table"
 import { filterTableConfig, filterTableItemConfig } from "../utils/filter-config"
-
-import type { TableConfig, TableData } from "../types/table"
-import type { TableInstance } from "element-plus"
 
 defineProps<{ tableConfig: TableConfig; tableData?: TableData }>()
 

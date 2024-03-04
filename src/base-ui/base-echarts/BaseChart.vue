@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { useEchart } from "../hooks/use-echart"
-import { echarts } from "../index"
-
-import type { InitEchart } from "../types"
+import { ECOption } from "./echarts"
+import { InitEchart } from "./types"
+import { useChart } from "./use-chart"
 
 interface BaseEchartProps {
   height?: string
   width?: string
-  option: echarts.EChartsOption
+  option: ECOption
 }
 
 const props = withDefaults(defineProps<BaseEchartProps>(), { width: "100%", height: "100%" })
@@ -18,7 +17,7 @@ const emit = defineEmits<{ completed: [res: InitEchart] }>()
 onMounted(() => {
   if (!echartContainerRef.value) return
 
-  const res = useEchart(echartContainerRef.value)
+  const res = useChart(echartContainerRef.value)
   watchEffect(() => res.setOptions(props.option))
 
   emit("completed", res)

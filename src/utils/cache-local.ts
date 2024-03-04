@@ -1,6 +1,5 @@
 export enum CacheKeys {
   // * add the cache keys
-  // ...
   USER_INFO = "#_userInfo",
 }
 
@@ -10,30 +9,42 @@ enum CacheType {
 }
 
 class Cache {
-  storage: Storage
+  private storage: Storage
 
   constructor(type: CacheType) {
     this.storage = type === CacheType.Local ? localStorage : sessionStorage
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setCache(key: CacheKeys, value: any) {
+  setCache(key: CacheKeys, value: unknown): this {
     if (value !== undefined && value !== null) {
-      this.storage.setItem(key, JSON.stringify(value))
+      try {
+        this.storage.setItem(key, JSON.stringify(value))
+      } catch (error) {
+        console.error("Error setting cache:", error)
+      }
+    }
+
+    return this
+  }
+
+  getCache<T = any>(key: CacheKeys, defaultValue: T): T {
+    try {
+      const item = this.storage.getItem(key)
+      return item ? JSON.parse(item) : defaultValue
+    } catch (error) {
+      console.error("Error retrieving cache:", error)
+      return defaultValue
     }
   }
 
-  getCache<T = unknown>(key: CacheKeys) {
-    const value = this.storage.getItem(key)
-    if (value && value !== "undefined") return JSON.parse(value) as T
-  }
-
-  removeCache(key: CacheKeys) {
+  removeCache(key: CacheKeys): this {
     this.storage.removeItem(key)
+    return this
   }
 
-  clearCache() {
+  clearCache(): this {
     this.storage.clear()
+    return this
   }
 }
 

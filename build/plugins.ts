@@ -2,9 +2,9 @@ import vue from "@vitejs/plugin-vue"
 import AutoImport from "unplugin-auto-import/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import Components from "unplugin-vue-components/vite"
+import { PluginOption } from 'vite'
 import { createHtmlPlugin } from "vite-plugin-html"
 
-import type { PluginOption } from 'vite'
 
 export function usePlugins(env: Record<string, string>) {
  const option:PluginOption[]  =  [

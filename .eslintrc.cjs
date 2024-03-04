@@ -35,6 +35,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "vue", "import"],
 
   rules: {
+    "@typescript-eslint/no-explicit-any": "off",
     "vue/multi-word-component-names": "off",
 
     "import/order": [

@@ -1,8 +1,6 @@
-import * as echarts from "echarts"
+import BaseChart from "./BaseChart.vue"
+import { echarts, ECOption } from "./echarts"
+import { InitEchart } from "./types"
 
-import BaseEchart from "./src/base-echarts.vue"
-
-import type { EChartsOption, InitEchart } from "./types"
-
-export { BaseEchart, echarts }
-export type { EChartsOption, InitEchart }
+export { BaseChart, echarts }
+export type { ECOption, InitEchart }

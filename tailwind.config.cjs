@@ -11,6 +11,9 @@ module.exports = {
     },
   },
   plugins: [
+    ["prettier-plugin-tailwindcss"],
+
+    // 解决el-button和tailwindcss样式冲突的问题
     function ({ addBase }) {
       addBase({
         ".el-button": {
@@ -18,6 +21,5 @@ module.exports = {
         },
       })
     },
-    ["prettier-plugin-tailwindcss"],
   ],
 }

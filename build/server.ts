@@ -1,4 +1,4 @@
-import type { ServerOptions } from "vite"
+import { ServerOptions } from "vite"
 
 export function useServe(env: Record<string, string>) {
     const option:ServerOptions =  {

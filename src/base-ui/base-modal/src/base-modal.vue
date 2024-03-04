@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue"
 
-import type { ModalConfig, ModalEvents } from "../types"
+import { ModalConfig, ModalEvents } from "../types"
 
 const props = defineProps<{ config?: ModalConfig; events?: ModalEvents }>()
 

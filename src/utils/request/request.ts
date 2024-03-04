@@ -1,16 +1,6 @@
-import axios from "axios"
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios"
 
-import type { CancelRequest, HYRequestConfig, HYRequestInterceptors } from "./types"
-import type { AxiosInstance, InternalAxiosRequestConfig } from "axios"
-
-/**
- *
- * @param cancelFn 取消上一次请求
- * @returns new axios.CancelToken(cancelFn)
- */
-const createCancelToken = (cancelFn: CancelRequest["create"]) => {
-  return new axios.CancelToken(cancelFn)
-}
+import { CancelRequest, HYRequestConfig, HYRequestInterceptors } from "./types"
 
 class HYRequest {
   instance: AxiosInstance
@@ -76,6 +66,15 @@ class HYRequest {
   put<T = unknown>(config: HYRequestConfig) {
     return this.request<T>({ ...config, method: "PUT" })
   }
+}
+
+/**
+ *
+ * @param cancelFn 取消上一次请求
+ * @returns new axios.CancelToken(cancelFn)
+ */
+const createCancelToken = (cancelFn: CancelRequest["create"]) => {
+  return new axios.CancelToken(cancelFn)
 }
 
 export { HYRequest, createCancelToken }

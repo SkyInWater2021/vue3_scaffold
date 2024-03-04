@@ -1,5 +1,5 @@
-import type { PaginationConfig } from "../types/pagination"
-import type { TableConfig, TableItemConfig } from "../types/table"
+import { PaginationConfig } from "../types/pagination"
+import { TableConfig, TableItemConfig } from "../types/table"
 
 /**
  * AIM: 筛选列表需要绑定的属性

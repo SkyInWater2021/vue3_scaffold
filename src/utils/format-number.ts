@@ -1,46 +1,45 @@
 // 转成万为单位
-export function numberToTenThousand(value: number, precision = 4) {
-  if (value === undefined || value === null) return
-  const result = value / 10000
-  return Number(result.toFixed(precision))
+export function numberToTenThousand(value?: number, precision = 4): number | undefined {
+  if (value === undefined || value === null) return undefined
+  return Number((value / 10000).toFixed(precision))
 }
 
 // 每隔三位添加一个逗号
-export function addCommasToNumber(number: number) {
-  if (number === undefined || number === null) return
-  const formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
-  return formattedNumber
+export function addCommasToNumber(number?: number): string | undefined {
+  if (number === undefined || number === null) return undefined
+  return number.toLocaleString()
 }
 
-// 转换文件大小
-export const fileSizeUnits = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
+export const fileSizeUnits = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"] as const
+
+// 格式化文件大小
 export function formatFileSize(
-  fileSize: number | undefined | null,
+  fileSize?: number,
   precision = 0,
-  option?: { form?: string; toUnitIndex?: number },
-) {
-  if (fileSize === undefined || fileSize === null) return
+  option?: {
+    fromUnit: (typeof fileSizeUnits)[number]
+    to: (typeof fileSizeUnits)[number]
+  },
+): string | undefined {
+  if (fileSize === undefined || fileSize === null || fileSize < 0) return undefined
 
-  const formUnitIndex = fileSizeUnits.findIndex(item => item === option?.form)
+  const fromUnitIndex = Math.max(fileSizeUnits.indexOf(option?.fromUnit ?? "B"), 0)
+  const toUnitIndex = Math.max(
+    fileSizeUnits.indexOf(option?.to ?? fileSizeUnits[fromUnitIndex]),
+    fromUnitIndex,
+  )
 
-  // 统一先转为Byte
-  let size = fileSize * Math.pow(1024, formUnitIndex === -1 ? 0 : formUnitIndex)
-  let unitIndex = 0
+  let sizeInBytes = fileSize * Math.pow(1024, fromUnitIndex)
+  let targetUnitIndex = fromUnitIndex
 
-  const limitIndex = option?.toUnitIndex ?? fileSizeUnits.length - 1
-  while (size >= 1024 && unitIndex < limitIndex) {
-    size /= 1024
-    unitIndex++
+  // 确保转换至正确的单位
+  while (sizeInBytes >= 1024 && targetUnitIndex < toUnitIndex) {
+    sizeInBytes /= 1024
+    targetUnitIndex++
   }
 
-  const formattedSize = Number(size).toFixed(precision)
-  const unit = fileSizeUnits[unitIndex]
+  const formattedSize = sizeInBytes.toFixed(precision)
+  const unit = fileSizeUnits[targetUnitIndex]
 
-  return {
-    value: Number(formattedSize),
-    unit: unit,
-    fullValue: `${formattedSize} ${unit}`,
-    currentUnitIndex: unitIndex,
-  }
+  return `${formattedSize} ${unit}`
 }

@@ -1,6 +1,7 @@
-import type { EraseReadonly } from "./common"
-import type { PaginationConfig } from "./pagination"
-import type { TableColumnInstance, TableInstance } from "element-plus"
+import { TableColumnInstance, TableInstance } from "element-plus"
+
+import { EraseReadonly } from "./common"
+import { PaginationConfig } from "./pagination"
 
 // 事件类型
 type EmitEvent = TableInstance["$emit"]
