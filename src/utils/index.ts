@@ -1,6 +1,6 @@
 export * from "./cache-local"
 export * from "./download-file"
 export * from "./format-date"
-export * from "./format-number"
+export * from "./format-date-traditional"
 export * from "./request"
 export * from "./select-rich"

@@ -4,22 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        global: {
-          blue: "var(--global-blue)",
-        },
+        pewter: "var(--global-pewter)",
+        textGray: "var(--global-gray)",
+      },
+      backgroundColor: {
+        headerBg: "#5aa0f4",
       },
     },
   },
-  plugins: [
-    ["prettier-plugin-tailwindcss"],
 
-    // 解决el-button和tailwindcss样式冲突的问题
-    function ({ addBase }) {
-      addBase({
-        ".el-button": {
-          "background-color": "var(--el-button-bg-color,val(--el-color-white))",
-        },
-      })
-    },
-  ],
+  plugins: [["prettier-plugin-tailwindcss"]],
 }

@@ -4,7 +4,7 @@
   /*  * 添加自定义base */
 
   body {
-    @apply text-sm;
+    @apply text-sm text-textGray;
     @apply overflow-hidden; /*  防止echarts的tooltip移入时抖动 */
   }
 

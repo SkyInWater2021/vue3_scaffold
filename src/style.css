@@ -3,5 +3,6 @@
 @import url("./styles/tailwindcss-utilities.css");
 
 :root {
-  --global-blue: rgb(101 142 210);
+  --global-gray: #767676;
+  --global-pewter: #a7b6cd;
 }
