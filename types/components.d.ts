@@ -21,6 +21,8 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sun: typeof import('./../src/components/Sun.vue')['default']
+    SunDemo: typeof import('./../src/components/SunDemo.vue')['default']
+    SunDeom: typeof import('./../src/components/SunDeom.vue')['default']
     TimeLine: typeof import('./../src/components/TimeLine.vue')['default']
     VanDivider: typeof import('vant/es')['Divider']
     VanDropdownItem: typeof import('vant/es')['DropdownItem']

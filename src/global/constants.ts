@@ -1,17 +1,16 @@
-export const CHINA_ONLINE_COMMUNITY = {
-  layerName: "CHINA_ONLINE_COMMUNITY",
+export const TDT_TK = "fb258b4c0bbf60ff7a0205b519ad9a96"
+
+export const TDT_GRAPH = {
+  layerName: "TDT_GRAPH",
   isDefault: true,
   layerType: "TileXYZ",
-  layerUrl:
-    "http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer/tile/{z}/{y}/{x}",
+  layerUrl: `http://t2.tianditu.com/DataServer?T=vec_w&X={x}&Y={y}&L={z}&tk=${TDT_TK}`,
 }
 
-export const CHINA_ONLINE_STREET = {
-  layerName: "CHINA_ONLINE_STREET",
+export const TDT_CIA = {
+  layerName: "TDT_GRAPH",
   isDefault: true,
   layerType: "TileXYZ",
-  layerUrl:
-    "https://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}",
+  zIndex: 9,
+  layerUrl: `http://t2.tianditu.com/DataServer?T=cva_w&X={x}&Y={y}&L={z}&tk=${TDT_TK}`,
 }
-
-export const BASE_LAYERS = [CHINA_ONLINE_COMMUNITY, CHINA_ONLINE_STREET]

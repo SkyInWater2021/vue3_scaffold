@@ -6,6 +6,7 @@ import SatelliteMap from "./SatelliteMap.vue"
 import { tabOptions } from "./config"
 
 const timeLineRef = ref<InstanceType<typeof TimeLine>>()
+const mapRef = ref<InstanceType<typeof SatelliteMap>>()
 
 const currentTab = ref(tabOptions[0].name)
 const currentSatelliteType = ref<string | number | undefined>()
@@ -16,6 +17,8 @@ const currentOptions = computed(() => {
 })
 
 const ticks = ["11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10"]
+
+const currentTickIndex = computed(() => timeLineRef.value?.currentTickIndex ?? 0)
 </script>
 
 <template>
@@ -31,7 +34,7 @@ const ticks = ["11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10"]
     </van-tabs>
 
     <div class="flex-1">
-      <SatelliteMap />
+      <SatelliteMap ref="mapRef" :current-tick-index="currentTickIndex" />
     </div>
 
     <div class="absolute bottom-2 left-[2%] z-50 w-[96%] rounded bg-white">

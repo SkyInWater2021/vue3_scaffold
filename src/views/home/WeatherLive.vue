@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import SunDemo from "@/components/SunDemo.vue"
 import { dateFormat, dateOffset, getWeekCn, traditionalDate } from "@/utils"
 
 const info = {
@@ -54,7 +55,7 @@ getForecast()
 
       <div class="flex items-center px-4 pb-2.5">
         <div class="flex w-[20%] items-center justify-center">
-          <Sun />
+          <SunDemo />
         </div>
 
         <div class="flex-1 text-center font-extralight">

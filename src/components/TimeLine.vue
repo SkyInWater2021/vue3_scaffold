@@ -2,14 +2,15 @@
 interface PropsType {
   interval?: number
   ticks: string[]
+  speed?: number
 }
-const props = withDefaults(defineProps<PropsType>(), { interval: 2 })
+const props = withDefaults(defineProps<PropsType>(), { interval: 2, speed: 1 })
 
 const lineConfig = {
   activeColor: "#4c84f7",
   inactiveColor: "var(--van-gray-3)",
-  width: "4px",
-  widthVal: 4,
+  width: "2px",
+  widthVal: 2,
 }
 
 const currentTickIndex = ref(0)
@@ -28,7 +29,7 @@ function play() {
     if (currentTickIndex.value > maxTick.value) {
       stop()
     }
-  }, 500)
+  }, props.speed * 1000)
 }
 
 function stop() {
