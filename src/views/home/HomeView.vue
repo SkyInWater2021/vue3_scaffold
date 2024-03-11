@@ -26,10 +26,6 @@ import WeatherLive from "./WeatherLive.vue"
 </template>
 
 <style scoped>
-:deep(.van-swipe__indicators) {
-  top: 0;
-}
-
 .tab-item {
   position: relative;
 }
@@ -42,5 +38,9 @@ import WeatherLive from "./WeatherLive.vue"
   height: 2px;
   background: white;
   content: "";
+}
+
+:deep(.van-swipe__indicators) {
+  top: 0;
 }
 </style>

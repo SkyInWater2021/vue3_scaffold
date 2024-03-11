@@ -3,46 +3,63 @@ import { Locale } from "vant"
 import zhCN from "vant/es/locale/lang/zh-CN"
 
 Locale.use("zh-CN", zhCN)
+
+const isFirstLoad = ref(true)
+const handleEnter = () => (isFirstLoad.value = false)
 </script>
 
 <template>
-  <div class="relative h-screen w-screen overflow-hidden">
+  <div
+    class="relative h-screen w-screen overflow-hidden"
+    :class="isFirstLoad ? '' : 'app-container'"
+  >
     <router-view v-slot="{ Component, route }">
-      <transition :name="route.meta.title === '首页' ? 'slide-right' : 'slide-left'">
-        <component :is="Component" />
+      <transition
+        :name="route.meta.title === '首页' ? 'slide-right' : 'slide-left'"
+        @enter="handleEnter"
+      >
+        <keep-alive :include="['HomeView']">
+          <component :is="Component" :key="route.path" />
+        </keep-alive>
       </transition>
     </router-view>
   </div>
 </template>
 
 <style scoped>
-.slide-right-enter-active,
-.slide-right-leave-active,
-.slide-left-enter-active,
-.slide-left-leave-active {
+.app-container .slide-left-enter-from,
+.app-container .slide-right-leave-to,
+.app-container .slide-right-enter-from,
+.app-container .slide-left-leave-to {
   position: absolute;
   inset: 0;
-  transition: all 1s;
-  will-change: transform;
 }
 
-.slide-right-enter {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
+.app-container .slide-left-enter-from,
+.app-container .slide-right-leave-to {
+  transform: translateX(100%);
 }
 
-.slide-right-leave-active {
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
+.app-container .slide-right-enter-from,
+.app-container .slide-left-leave-to {
+  transform: translateX(-100%);
 }
 
-.slide-left-enter {
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
+.app-container .slide-left-enter-to,
+.app-container .slide-right-leave-from,
+.app-container .slide-right-enter-to,
+.app-container .slide-left-leave-from {
+  position: absolute;
+  inset: 0;
+  transform: translateX(0);
 }
 
-.slide-left-leave-active {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
+.app-container .slide-left-enter-active,
+.app-container .slide-right-leave-active,
+.app-container .slide-right-enter-active,
+.app-container .slide-left-leave-active {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.3s;
 }
 </style>

@@ -11,8 +11,8 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:vue/vue3-essential",
-    "plugin:prettier/recommended",
     "plugin:import/typescript",
+    "plugin:prettier/recommended",
     "./types/.eslintrc-auto-import.json",
   ],
 

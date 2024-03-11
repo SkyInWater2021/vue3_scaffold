@@ -10,6 +10,8 @@ module.exports = {
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts", "**/*.json", "**/*.md", "**/*.yaml"],
   rules: {
     "selector-class-pattern": null,
+    "function-no-unknown": null,
+    "length-zero-no-unit": null,
 
     "order/properties-order": [
       // 定位
