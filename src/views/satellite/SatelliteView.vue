@@ -27,7 +27,10 @@ const currentTickIndex = computed(() => timeLineRef.value?.currentTickIndex ?? 0
 
     <van-tabs v-model:active="currentTab" title-active-color="black" color="black" line-width="30">
       <van-tab v-for="tab in tabOptions" :title="tab.title" :name="tab.name" :key="tab.name">
-        <van-dropdown-menu :duration="0">
+        <van-dropdown-menu
+          :duration="0"
+          style="--van-dropdown-menu-height: 32px; --van-dropdown-menu-title-font-size: 12px"
+        >
           <van-dropdown-item v-model="currentSatelliteType" :options="currentOptions" />
         </van-dropdown-menu>
       </van-tab>
@@ -48,15 +51,14 @@ const currentTickIndex = computed(() => timeLineRef.value?.currentTickIndex ?? 0
   </div>
 </template>
 
-<style>
-.van-tabs__line {
+<style scoped>
+/* 标签页 */
+:deep(.van-tabs__line) {
   bottom: 20px;
 }
 
+/* 下拉框 */
 .van-dropdown-menu {
-  --van-dropdown-menu-height: 32px;
-  --van-dropdown-menu-title-font-size: 12px;
-
   position: absolute;
   top: 48px;
   right: 4px;
@@ -65,30 +67,33 @@ const currentTickIndex = computed(() => timeLineRef.value?.currentTickIndex ?? 0
   border-radius: 4px;
 }
 
-.van-dropdown-menu__item {
+:deep(.van-dropdown-menu__item) {
   padding: 0 16px 0 6px;
 }
 
-.van-overlay {
-  background-color: transparent;
-}
-
-.van-dropdown-item__content {
+:deep(.van-dropdown-item__content) {
   text-wrap: nowrap;
   width: fit-content;
 }
 
-.van-cell {
-  padding: 5px 10px;
-}
-
-.van-cell__title {
-  font-size: 12px;
-}
-
-.van-popup--top {
+/* 弹出层 */
+:deep(.van-popup--top) {
   top: 2px;
   right: 4px;
   left: auto;
+}
+
+/* 遮罩层 */
+:deep(.van-overlay) {
+  background-color: transparent;
+}
+
+/* 单元格 */
+:deep(.van-cell) {
+  padding: 5px 10px;
+}
+
+:deep(.van-cell__title) {
+  font-size: 12px;
 }
 </style>

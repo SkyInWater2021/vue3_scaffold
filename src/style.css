@@ -4,5 +4,8 @@
 
 :root {
   --global-gray: #767676;
+  --global-gray-a: #767676aa;
+  --global-gray-5: #76767655;
   --global-pewter: #a7b6cd;
+  --global-blue: #5aa0f4;
 }

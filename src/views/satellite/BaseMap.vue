@@ -1,24 +1,23 @@
 <script lang="ts" setup>
 import CME2D from "CME2D"
 
-import { TDT_GRAPH } from "@/global"
+import { CHENG_DU_LON_LAT, TDT_GRAPH } from "@/global"
 
 const emit = defineEmits<{
   loaded: [instance: any]
 }>()
 
-const MAP_CONTAINER = "mapWrapperId"
+const MAP_CONTAINER = "SatelliteMapId"
 
 function initCMEMap() {
   const instance = new CME2D({
     target: MAP_CONTAINER,
     view: {
       projection: "EPSG:4326",
-      // extent: [70.5, 0.5, 135, 54], // 仅仅中国
-      extent: [30, -30.5, 160, 80],
-      zoom: 5,
+      extent: [30, -30.5, 160, 80], // 世界范围限制
+      zoom: 6,
       minZoom: 1,
-      center: [104, 25.74],
+      center: [...CHENG_DU_LON_LAT],
     },
     baseLayers: [TDT_GRAPH],
   })

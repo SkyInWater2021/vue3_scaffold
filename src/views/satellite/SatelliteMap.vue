@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { TDT_CIA } from "@/global"
-import ChinaJson from "@/global/json/100000_full.json"
-import { CreateLayer } from "@/utils"
-import { BaseMap } from "@/views/components"
+import { chengDuLayer, chinaBoundary, ciaLayer } from "@/views/com-layers"
 
+import BaseMap from "./BaseMap.vue"
 import { legend } from "./config"
 
 interface PropType {
@@ -28,8 +26,10 @@ const tifArr = [
   "http://111.205.114.94:12301/CMEDATA/SATE/FY4B/2023090200/true_color/FY4B_true_color_20230902060000_4326.tif",
 ]
 
+// 当前真彩图
 const currentTifIndex = computed(() => props.currentTickIndex ?? 0)
 
+// 渲染卫星图层
 function renderRaster() {
   if (!mapInstance.value) return
 
@@ -64,20 +64,14 @@ function renderRaster() {
   })
 }
 
+// 添加其他图层
 function addLayers() {
-  // 添加图层
-  const chinaBoundary = CreateLayer.createLayerOfGeoJson(ChinaJson, "chinaBoundaryLayer")
-  const chengDuLayer = CreateLayer.createIconLayer(
-    [{ Lon: " 104.06543521970411", Lat: " 30.577049300041224", label: "成都" }],
-    "chengduPositionLayer",
-  )
-  const ciaLayer = CreateLayer.createXYZLayer(TDT_CIA)
-
   mapInstance.value.addLayer(chinaBoundary)
   mapInstance.value.addLayer(chengDuLayer)
   mapInstance.value.addLayer(ciaLayer)
 }
 
+// 播放卫星图层
 watch(currentTifIndex, (newVal, oldVal) => {
   rasterRes.value[newVal]?.setVisible(true)
   rasterRes.value[oldVal]?.setVisible(false)

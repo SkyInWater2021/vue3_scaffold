@@ -44,7 +44,12 @@ export class CreateLayer {
    * @param zIndex 图层层级
    * @returns
    */
-  static createIconLayer(data: Record<string, any>[] = [], layerId: string, zIndex = 9) {
+  static createIconLayer(
+    data: Record<string, any>[] = [],
+    layerId: string,
+    iconUrl: string,
+    zIndex = 9,
+  ) {
     const features: Feature<Point>[] = [] // 特性集合
     const coordinateArr = { lon: [] as string[], lat: [] as string[] }
 
@@ -71,8 +76,6 @@ export class CreateLayer {
       zIndex: zIndex,
 
       style: () => {
-        const iconUrl = new URL("@/assets/map-icons/station-red.png", import.meta.url).href
-
         const styles: Style[] = []
         const style = new Style({
           image: new Icon({

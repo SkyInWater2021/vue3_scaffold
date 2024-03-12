@@ -12,6 +12,7 @@ module.exports = {
     "selector-class-pattern": null,
     "function-no-unknown": null,
     "length-zero-no-unit": null,
+    "custom-property-empty-line-before": null,
 
     "order/properties-order": [
       // 定位

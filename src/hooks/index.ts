@@ -1,3 +1,3 @@
-import { useWeatherIcon } from "./use-weather-icon"
+import { useMenuIcon } from "./use-weather-icon"
 
-export { useWeatherIcon }
+export { useMenuIcon }
