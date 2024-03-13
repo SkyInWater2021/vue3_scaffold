@@ -18,8 +18,8 @@
   },
   "optionalDependencies": {
     "@turf/turf": "^6.5.0",
-    "CME-MeteoSinglePoint": "^0.1.11",
     "CME-RasterRender": "^0.1.13",
+    "CME_MeteoSinglePoint": "^0.0.1",
     "CME2D": "^0.5.0",
     "geobuf": "^3.0.2",
     "geotiff": "^2.1.3",

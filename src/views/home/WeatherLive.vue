@@ -1,23 +1,18 @@
 <script lang="ts" setup>
+import { homeApi } from "@/api/home"
+import type { Daily, Now } from "@/api/home/types"
 import SunDemo from "@/components/SunDemo.vue"
-import { dateFormat, dateOffset, getWeekCn, traditionalDate } from "@/utils"
+import { dateFormat, getCnWeek, traditionalDate } from "@/utils"
 
-const info = {
-  location: "成都市武侯区天府大道中段",
-  temperature: "15.5",
-  updateTime: dateFormat(new Date(), "HH时mm分"),
+const info = reactive({
+  location: "",
+  temperature: 0,
+  updateTime: "",
   dateInfo: getDateInfo(),
-}
+})
 
-const forecast = reactive([
-  {
-    label: "昨天",
-    date: dateOffset({ offset: -1, offsetType: "day", format: "D/M" }),
-    day: "白天",
-    night: "夜晚",
-    temperature: "7/12",
-  },
-])
+const dailyForecast = ref<Daily[]>([]) // 当前天气情况
+const nowWeather = ref<Now>() // 未来一周天气预报
 
 function getDateInfo() {
   const date = new Date()
@@ -32,25 +27,32 @@ function getDateInfo() {
   }
 }
 
-function getForecast() {
-  const day = new Date().getDay()
-  for (let i = 0; i < 6; i++) {
-    forecast.push({
-      label: i === 0 ? "今天" : getWeekCn(day + i),
-      date: dateOffset({ offset: i, offsetType: "day", format: "D/M" }),
-      day: "☀️",
-      night: "⛅️",
-      temperature: "7/12",
+// 请求实时天气数据
+const fetchLoading = ref(false)
+function fetchLiveData() {
+  fetchLoading.value = true
+  homeApi
+    .fetchWeather()
+    .then(({ code, data }) => {
+      if (code === 200) {
+        const { location, now, lastUpdate, daily } = data
+        info.location = location.name ?? ""
+        info.temperature = now.temperature ?? 0
+        info.updateTime = lastUpdate.split(" ").pop() ?? ""
+        dailyForecast.value = daily
+        nowWeather.value = now
+      }
     })
-  }
+    .catch(() => console.error("fetch weatherLive error"))
+    .finally(() => (fetchLoading.value = false))
 }
 
-getForecast()
+fetchLiveData()
 </script>
 
 <template>
   <van-swipe indicator-color="white">
-    <van-swipe-item v-for="item in 3" :key="item" class="py-2.5 text-white">
+    <van-swipe-item v-for="item in 2" :key="item" class="py-2.5 text-white">
       <div class="p-2.5">{{ info.location }}</div>
 
       <div class="flex items-center px-4 pb-2.5">
@@ -70,38 +72,38 @@ getForecast()
           <div>{{ info.dateInfo.solar }}</div>
           <DividerLine />
           <div>{{ info.dateInfo.lunar }}</div>
-          <DividerLine />
-          <div class="flex items-center">
-            <van-icon name="description" :size="18" class="mr-1" />
-            <span class="text-center text-xs">同步昨天上升4.5℃</span>
-          </div>
         </div>
       </div>
 
       <div class="mb-2 flex h-[24px] justify-around px-4 text-center">
-        <div>多云</div>
+        <div>{{ dailyForecast[0]?.dayText ?? "-" }}</div>
         <DividerLine vertical />
-        <div>东北风 2级</div>
+        <div>
+          {{ nowWeather?.windDirection ?? "-" }}
+          {{ nowWeather?.windSpeed ?? "-" }}级
+        </div>
         <DividerLine vertical />
-        <div>湿度 43%</div>
+        <div>湿度 {{ nowWeather?.humidity ?? "-" }}%</div>
         <DividerLine vertical />
-        <div>无降水</div>
+        <div>
+          {{ nowWeather?.precipitation ? `降水 ${nowWeather.precipitation}mm` : "无降水" }}
+        </div>
       </div>
 
       <div>
         <div class="flex justify-between px-2.5">
           <span class="tab-item">趋势预报</span>
-          <span class="text-xs text-pewter">12:00更新</span>
+          <span class="text-xs text-pewter">{{ info.updateTime }}</span>
         </div>
         <DividerLine />
 
         <div class="flex justify-between p-2.5 pb-1 text-xs">
-          <div v-for="item in forecast" :key="item.label">
-            <div class="mb-2">{{ item.label }}</div>
-            <div class="mb-2">{{ item.date }}</div>
-            <div class="mb-2">{{ item.day }}</div>
-            <div class="mb-2">{{ item.night }}</div>
-            <div>{{ item.temperature }}</div>
+          <div v-for="item in dailyForecast" :key="item.date">
+            <div class="mb-2">{{ getCnWeek(item.date) }}</div>
+            <div class="mb-2">{{ dateFormat(item.date, "M/D") }}</div>
+            <div class="mb-2">{{ item.dayText }}</div>
+            <div class="mb-2">{{ item.nightText }}</div>
+            <div>{{ item.low + "/" + item.high }}℃</div>
           </div>
         </div>
         <DividerLine />

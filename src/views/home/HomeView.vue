@@ -6,7 +6,7 @@ import WeatherLive from "./WeatherLive.vue"
 </script>
 
 <template>
-  <div class="flex h-full flex-col bg-[#5677a6]">
+  <div class="flex h-full flex-col bg-[#5677a6cc]">
     <PageHeader class="!bg-transparent">
       <template #left><van-icon name="plus" :size="22" /></template>
       <template #right>
@@ -15,11 +15,9 @@ import WeatherLive from "./WeatherLive.vue"
       </template>
     </PageHeader>
 
-    <div class="h-[42vh] min-h-[350px]">
-      <WeatherLive />
-    </div>
+    <div class="pb-2.5"><WeatherLive /></div>
 
-    <div class="flex-1 overflow-scroll bg-white p-2.5">
+    <div class="flex-1 overflow-scroll bg-white py-2.5">
       <WeatherAnalysis />
     </div>
   </div>

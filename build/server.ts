@@ -5,7 +5,7 @@ export function useServe(env: Record<string, string>) {
       hmr: true,
       open: true,
       host: true,
-      port: 5999,
+      port: undefined,
       proxy: {
         [env.VITE_APP_API_FLAG]: {
           target: env.VITE_APP_API,

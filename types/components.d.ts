@@ -24,6 +24,7 @@ declare module 'vue' {
     SunDemo: typeof import('./../src/components/SunDemo.vue')['default']
     SunDeom: typeof import('./../src/components/SunDeom.vue')['default']
     TimeLine: typeof import('./../src/components/TimeLine.vue')['default']
+    VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanBottom: typeof import('vant/es')['Bottom']
     VanButton: typeof import('vant/es')['Button']
     VanCheckbox: typeof import('vant/es')['Checkbox']

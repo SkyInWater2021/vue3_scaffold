@@ -31,7 +31,9 @@ export function dateFormat(
   return date ? dayjs(date).format(format) : undefined
 }
 
-export function getWeekCn(num: number) {
-  const index = num % 7
+export function getCnWeek(date?: Date | string | dayjs.Dayjs) {
+  const num = dateFormat(date, "d")
+  if (!num) return
+  const index = Number(num) % 7
   return ["周日", "周一", "周二", "周三", "周四", "周五", "周六"][index]
 }
