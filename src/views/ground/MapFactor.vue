@@ -1,28 +1,30 @@
 <script lang="ts" setup>
-import { factors } from "./config"
+import { cloneDeep } from "lodash-es"
+
+import { plotConfig } from "./config"
+
+const factors = cloneDeep(plotConfig.legend)
 
 // 当前选择要素
-const activeFactors = ref(["T24", "P24", "等压线"])
+const activeFactors = ref(factors.map(item => item.value))
 function handleFactorClick(val: string) {
   const index = activeFactors.value.indexOf(val)
   index === -1 ? activeFactors.value.push(val) : activeFactors.value.splice(index, 1)
 }
 
-defineExpose({
-  activeFactors,
-})
+defineExpose({ activeFactors })
 </script>
 
 <template>
   <div class="factor-wrapper">
     <span
       v-for="item in factors"
-      :key="item.text"
+      :key="item.name"
       class="factor-item"
       :class="{ 'is-active': activeFactors.includes(item.value) }"
       @click="handleFactorClick(item.value)"
     >
-      {{ item.text }}
+      {{ item.name }}
     </span>
   </div>
 </template>

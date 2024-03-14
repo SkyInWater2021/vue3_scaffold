@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { homeApi } from "@/api/home"
 import type { Daily, Now } from "@/api/home/types"
-import SunDemo from "@/components/SunDemo.vue"
+import { useWeatherIcon } from "@/hooks"
 import { dateFormat, getCnWeek, traditionalDate } from "@/utils"
 
 const info = reactive({
@@ -47,6 +47,10 @@ function fetchLiveData() {
     .finally(() => (fetchLoading.value = false))
 }
 
+function getWeatherIcon(num: number) {
+  return useWeatherIcon(String(num), "png")
+}
+
 fetchLiveData()
 </script>
 
@@ -57,7 +61,7 @@ fetchLiveData()
 
       <div class="flex items-center px-4 pb-2.5">
         <div class="flex w-[20%] items-center justify-center">
-          <SunDemo />
+          <img :src="getWeatherIcon(0)" />
         </div>
 
         <div class="flex-1 text-center font-extralight">
@@ -97,12 +101,15 @@ fetchLiveData()
         </div>
         <DividerLine />
 
-        <div class="flex justify-between p-2.5 pb-1 text-xs">
-          <div v-for="item in dailyForecast" :key="item.date">
+        <div class="flex items-center justify-between p-2.5 pb-1 text-xs">
+          <div v-for="item in dailyForecast" :key="item.date" class="text-center">
             <div class="mb-2">{{ getCnWeek(item.date) }}</div>
             <div class="mb-2">{{ dateFormat(item.date, "M/D") }}</div>
-            <div class="mb-2">{{ item.dayText }}</div>
-            <div class="mb-2">{{ item.nightText }}</div>
+            <img class="mx-auto mb-2 aspect-square h-[14px]" :src="getWeatherIcon(item.dayCode)" />
+            <img
+              class="mx-auto mb-2 aspect-square h-[14px]"
+              :src="getWeatherIcon(item.nightCode)"
+            />
             <div>{{ item.low + "/" + item.high }}℃</div>
           </div>
         </div>

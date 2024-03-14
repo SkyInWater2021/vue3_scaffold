@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    copy: typeof import('./../src/components/SvgIcon copy.vue')['default']
     Divider: typeof import('../src/components/DividerLine.vue')['default']
     DividerLine: typeof import('./../src/components/DividerLine.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -23,6 +24,7 @@ declare module 'vue' {
     Sun: typeof import('./../src/components/Sun.vue')['default']
     SunDemo: typeof import('./../src/components/SunDemo.vue')['default']
     SunDeom: typeof import('./../src/components/SunDeom.vue')['default']
+    SvgIcon: typeof import('./../src/components/SvgIcon.vue')['default']
     TimeLine: typeof import('./../src/components/TimeLine.vue')['default']
     VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanBottom: typeof import('vant/es')['Bottom']

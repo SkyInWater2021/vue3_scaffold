@@ -1,100 +1,137 @@
 <script lang="ts" setup>
+import { cloneDeep } from "lodash-es"
+
+import { MapEvents } from "@/utils"
 import { chengDuLayer } from "@/views/com-layers"
 
 import MapBase from "./MapBase.vue"
-import tempData from "./temp.json"
+import { plotConfig } from "./config"
 
 interface PropType {
   factors: string[]
 }
-defineProps<PropType>()
+const props = defineProps<PropType>()
 
-const SinglePointRef = ref()
+const meteoConfig: any = cloneDeep(plotConfig)
 
+const meteoMapRef = ref() // 地面填图组件实例
 const mapInstance = ref() // 地图实例
+
+const popupInfo = ref() // 浮窗详情信息
+const popupRef = ref<HTMLElement>()
+
+const popupDetails = computed(() => {
+  const keys = Object.keys(popupInfo.value?.pointData ?? {})
+  // TODO 给字段排序
+  // ...
+  return keys
+})
+
 const mapLoaded = (instance: any) => {
   mapInstance.value = instance
-  addLayers()
-}
+  mapInstance.value.addLayer(chengDuLayer)
 
-function addWebGLPoint() {
-  const colorFiled = "TEM_ChANGE_24h" //图片颜色渲染字段
-  const pngField = "shape" //不同类型对应的不同的图标
-  const iconSrc = new URL("@/assets/weather-icons/ufo-shapes.png", import.meta.url).href
-  let style = {
-    "icon-src": iconSrc, //图片对应的位置
-    "icon-color": [
-      //图片的颜色
-      "interpolate",
-      ["linear"],
-      ["get", colorFiled], //图片颜色渲染字段 不同的值对应的不同的颜色
-      -5,
-      [255, 160, 110],
-      0,
-      [0, 255, 0],
-      2,
-      [255, 255, 0],
-      3,
-      [255, 255, 200],
-      5,
-      [255, 0, 255],
-      30,
-      [100, 100, 100],
-    ],
+  mapInstance.value!.on("click", (evt: any) => {
+    popupInfo.value = MapEvents.mapPointClick(mapInstance.value as any, evt, {
+      popup: popupRef.value!,
+    })
+    if (popupInfo.value?.overlay) {
+      mapInstance.value!.addOverlay(popupInfo.value?.overlay)
+    }
+  })
 
-    "icon-offset": [
-      // 不同类型对应的不同的图标
-      "match",
-      ["get", pngField],
-      "light",
-      [0, 0], // light类型图标 在"./data/ufo_shapes.png"所在的xy的值
-      "sphere",
-      [32, 0],
-      "circle",
-      [32, 0],
-      "disc",
-      [64, 0],
-      "oval",
-      [64, 0],
-      "triangle",
-      [96, 0],
-      "fireball",
-      [0, 32],
-      [0, 32],
-    ],
-    "icon-size": [32, 32], //图标的大小
-    "icon-scale": 0.8, //图标的缩放
-  }
-  let config = {
-    map: mapInstance.value,
-    config: {
-      style: style, //样式
-      features: tempData, //数据
-      lon: "Lon", //经度对应的字段
-      lat: "Lat", // 纬度对应的字段
-      pngField: "shape", //图片对应的字段
-      filedName: colorFiled, //渲染的字段  颜色对应的字段 颜色根据该字段值渲染不同的颜色
-    },
-  }
-
-  SinglePointRef.value.addWebGLCutsomPointLayer(config).then((res: any) => {
-    console.log(res, "🍊")
+  mapInstance.value!.on("pointermove", (evt: any) => {
+    MapEvents.mapPointHover(mapInstance.value, evt)
   })
 }
 
-// 添加其他图层
-function addLayers() {
-  mapInstance.value.addLayer(chengDuLayer)
+function closePopup() {
+  popupRef.value!.style.display = "none"
+}
+function clearPopup() {
+  const { pointData } = popupInfo.value ?? {}
+  if (popupRef.value && !pointData) closePopup()
+}
+
+watchEffect(clearPopup)
+
+function updateFactors() {
+  meteoMapRef.value.checkList = props.factors
+  meteoMapRef.value.changeCheck()
 }
 
 onMounted(() => {
-  addWebGLPoint()
+  mapInstance.value.getMap().once("postrender", () => {
+    meteoConfig.url = new URL("./aa.json", import.meta.url).href
+    meteoConfig.map = mapInstance.value
+    meteoMapRef.value.init(mapInstance.value, meteoConfig)
+
+    watch(
+      () => props.factors.length,
+      () => {
+        if (!meteoMapRef.value) return
+        updateFactors()
+      },
+    )
+  })
 })
 </script>
 
 <template>
-  <div class="h-full">
+  <div class="gis-map__wrapper h-full">
     <MapBase @loaded="mapLoaded" />
-    <CME_MeteoSinglePoint ref="SinglePointRef" />
+    <CME_MeteoMap ref="meteoMapRef" />
+
+    <div ref="popupRef" class="popup-container">
+      <van-icon name="cross" class="popup-close__btn" @click="closePopup" />
+      <template v-for="mapKey in popupDetails" :key="mapKey">
+        <div v-if="mapKey && popupInfo.pointData[mapKey]" class="popup-details__column">
+          <div>{{ mapKey }}</div>
+          <div style="margin-right: 10px">:</div>
+          <div>{{ popupInfo.pointData[mapKey] }}</div>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.gis-map__wrapper {
+  position: relative;
+  height: 100%;
+  cursor: grab;
+}
+
+.popup-container {
+  position: relative;
+  padding: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background-color: var(--global-gray);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup-container::before {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -10px;
+  border-color: transparent transparent var(--global-gray) transparent;
+  border-style: solid;
+  border-width: 10px;
+  content: "";
+}
+
+.popup-close__btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+
+.popup-details__column {
+  display: flex;
+  margin-bottom: 8px;
+}
+</style>

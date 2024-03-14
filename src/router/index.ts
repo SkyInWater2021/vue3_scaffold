@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router"
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
 
 import { homeRoutes } from "./home-route"
 
@@ -12,7 +12,7 @@ const router = createRouter({
       meta: { title: "首页" },
       component: () => import(`@/views/home/HomeView.vue`),
     },
-    ...homeRoutes,
+    ...(homeRoutes as unknown as RouteRecordRaw[]),
   ],
 })
 

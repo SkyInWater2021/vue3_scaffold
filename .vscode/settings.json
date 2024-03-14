@@ -29,6 +29,7 @@
     "pinia",
     "plotty",
     "pnpm",
+    "postrender",
     "preinstall",
     "spreadsheetml",
     "stylelint",
