@@ -17,7 +17,6 @@ const currentOptions = computed(() => {
 })
 
 const ticks = ["11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10"]
-
 const currentTickIndex = computed(() => timeLineRef.value?.currentTickIndex ?? 0)
 </script>
 

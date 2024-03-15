@@ -8,15 +8,14 @@ const modalRoutes = ref<ExtendedRouteRecordRaw[]>([])
 const router = useRouter()
 
 function handleIconClick(menu: ExtendedRouteRecordRaw) {
-  if (!menu.children) {
-    router.push(menu.path)
-    showModal.value = false
+  if (menu.children) {
+    modalRoutes.value = menu.children ?? []
+    modalTitle.value = menu.meta.title
+    showModal.value = true
     return
   }
 
-  modalRoutes.value = menu.children ?? []
-  modalTitle.value = menu.meta.title
-  showModal.value = true
+  router.push(menu.path)
 }
 </script>
 

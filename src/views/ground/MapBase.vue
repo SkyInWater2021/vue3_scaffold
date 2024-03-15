@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import CME2D from "CME2D"
 
-import { CHENG_DU_LON_LAT, TDT_CIA, TDT_GRAPH } from "@/global"
+import { CHENG_DU_LON_LAT, TDT_CIA, TDT_GRAPH, TDT_ST } from "@/global"
 
 const emit = defineEmits<{
   loaded: [instance: any]
@@ -19,7 +19,7 @@ function initCMEMap() {
       minZoom: 1,
       center: [...CHENG_DU_LON_LAT],
     },
-    baseLayers: [TDT_GRAPH, TDT_CIA],
+    baseLayers: [TDT_GRAPH, TDT_ST, TDT_CIA],
   })
 
   emit("loaded", instance)
@@ -31,10 +31,3 @@ onMounted(() => initCMEMap())
 <template>
   <div :id="MAP_CONTAINER" class="map-wrapper h-full"></div>
 </template>
-
-<style scoped>
-.map-wrapper {
-  image-rendering: optimize-contrast; /* Chrome, Safari */
-  image-rendering: crisp-edges; /* Firefox */
-}
-</style>

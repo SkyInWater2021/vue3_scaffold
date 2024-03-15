@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import CME2D from "CME2D"
+import { Map } from "ol"
 
 import { CHENG_DU_LON_LAT, TDT_GRAPH } from "@/global"
 
-const emit = defineEmits<{
-  loaded: [instance: any]
-}>()
+const emit = defineEmits<{ loaded: [instance: Map] }>()
 
 const MAP_CONTAINER = "SatelliteMapId"
 
@@ -15,7 +14,7 @@ function initCMEMap() {
     view: {
       projection: "EPSG:4326",
       extent: [30, -30.5, 160, 80], // 世界范围限制
-      zoom: 6,
+      zoom: 2,
       minZoom: 1,
       center: [...CHENG_DU_LON_LAT],
     },
@@ -29,12 +28,5 @@ onMounted(() => initCMEMap())
 </script>
 
 <template>
-  <div :id="MAP_CONTAINER" class="map-wrapper h-full"></div>
+  <div :id="MAP_CONTAINER" class="h-full"></div>
 </template>
-
-<style scoped>
-.map-wrapper {
-  image-rendering: optimize-contrast; /* Chrome, Safari */
-  image-rendering: crisp-edges; /* Firefox */
-}
-</style>

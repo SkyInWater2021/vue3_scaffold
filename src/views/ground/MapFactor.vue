@@ -4,6 +4,13 @@ import { cloneDeep } from "lodash-es"
 import { plotConfig } from "./config"
 
 const factors = cloneDeep(plotConfig.legend)
+factors.push({
+  label: "等压线",
+  name: "等压线",
+  value: "isoBar_Bar",
+  color: "black",
+  disabled: true,
+})
 
 // 当前选择要素
 const activeFactors = ref(factors.map(item => item.value))
@@ -22,6 +29,7 @@ defineExpose({ activeFactors })
       :key="item.name"
       class="factor-item"
       :class="{ 'is-active': activeFactors.includes(item.value) }"
+      :style="{ color: item.color }"
       @click="handleFactorClick(item.value)"
     >
       {{ item.name }}
@@ -48,13 +56,14 @@ defineExpose({ activeFactors })
   width: calc((1 / 4 * 100%) - 4px);
   height: 30px;
   margin: 2px;
-  color: white;
+  color: #030303;
   background-color: var(--global-gray-a);
   aspect-ratio: 1;
 }
 
 .factor-item.is-active {
-  background-color: var(--global-blue);
+  background-color: white;
+  border: 1px solid var(--global-blue);
 }
 
 .factor-item:last-child {

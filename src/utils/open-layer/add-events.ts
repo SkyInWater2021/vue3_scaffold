@@ -35,6 +35,7 @@ export class MapEvents {
       overlay.getElement()!.style.position = "relative"
       overlay.getElement()!.style.left = "-50%"
       overlay.getElement()!.style.top = "24px"
+      overlay.getElement()!.style.pointerEvents = "auto"
     }
 
     const location = mapInstance.getPixelFromCoordinate(evt.pixel)

@@ -13,7 +13,7 @@ interface ImportMeta {
 }
 
 declare module "CME2D"
-declare module "CME-RasterRender"
-declare module "CME-Isoline"
-declare module "CME_MeteoSinglePoint"
+declare module "CME_GridLayer"
 declare module "CME_MeteoMap"
+
+declare module "CME-RasterRender"

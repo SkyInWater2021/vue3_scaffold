@@ -1,23 +1,3 @@
-export const factors = [
-  { text: "T24", value: "T24" },
-  { text: "P24", value: "P24" },
-  { text: "T", value: "T" },
-  { text: "P", value: "P" },
-  { text: "ww", value: "ww" },
-  { text: "N", value: "N" },
-  { text: "P3", value: "P3" },
-  { text: "vv", value: "vv" },
-  { text: "W1", value: "W1" },
-  { text: "W2", value: "W2" },
-  { text: "Td", value: "Td" },
-  { text: "h", value: "h" },
-  { text: "Nh", value: "Nh" },
-  { text: "R6", value: "R6" },
-  { text: "W", value: "W" },
-  { text: "ID", value: "ID" },
-  { text: "等压线", value: "等压线" },
-]
-
 export const plotConfig = {
   // interfaceUrl: "aa.json",
   // icon: "left_wendu",
