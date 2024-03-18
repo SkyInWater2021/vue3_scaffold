@@ -33,8 +33,9 @@ changeCurrentInfo()
 </script>
 
 <template>
-  <div class="flex items-center">
-    <div class="100px">
+  <div class="flex flex-wrap items-center">
+    <div class="mt-2 w-[40px] text-right">时间:</div>
+    <div class="100px mt-2">
       <van-field
         label-width="fit-content"
         v-model="currentDate"
@@ -53,7 +54,7 @@ changeCurrentInfo()
       </van-popup>
     </div>
 
-    <div class="mr-2.5 w-[80px]">
+    <div class="mr-2.5 mt-2 w-[80px]">
       <van-dropdown-menu
         style="--van-dropdown-menu-height: 26px; --van-dropdown-menu-title-font-size: 14px"
       >
@@ -61,7 +62,7 @@ changeCurrentInfo()
       </van-dropdown-menu>
     </div>
 
-    <div class="flex-1">
+    <div class="mt-2 min-w-[120px] flex-1">
       <van-button size="small" icon="arrow-left" @click="changeHour('sub')" />
       <van-button class="!mx-1" size="small" type="primary">最新</van-button>
       <van-button size="small" icon="arrow" @click="changeHour('add')" />
@@ -70,53 +71,5 @@ changeCurrentInfo()
 </template>
 
 <style scoped>
-.van-button {
-  height: 28px;
-}
-
-:deep(.van-field__control) {
-  width: 100px;
-  height: 28px;
-  text-align: center;
-  border: 1px solid var(--global-gray-5);
-  border-radius: 4px;
-}
-
-/* 下拉框 */
-.van-dropdown-menu {
-  overflow: hidden;
-  text-align: center;
-  border: 1px solid var(--global-gray-5);
-  border-radius: 4px;
-}
-
-:deep(.van-dropdown-menu__item) {
-  padding: 0 16px 0 6px;
-}
-
-:deep(.van-dropdown-item__content) {
-  text-wrap: nowrap;
-  width: fit-content;
-}
-
-/* 弹出层 */
-:deep(.van-popup--top) {
-  top: 2px;
-  left: 120px;
-  width: 80px;
-}
-
-/* 遮罩层 */
-:deep(.van-overlay) {
-  background-color: transparent;
-}
-
-/* 单元格 */
-:deep(.van-cell) {
-  padding: 10px;
-}
-
-:deep(.van-cell__title) {
-  font-size: 14px;
-}
+@import url("./sizer-style.css");
 </style>

@@ -5,8 +5,14 @@ import GroundMap from "./GroundMap.vue"
 import MapFactor from "./MapFactor.vue"
 import MapSizer from "./MapSizer.vue"
 
-const factorInstance = ref<InstanceType<typeof MapFactor>>()
+interface PropType {
+  title?: string
+  // TODO 其他筛选条件,用于请求接口
+  // ...
+}
+withDefaults(defineProps<PropType>(), { title: "地面" })
 
+const factorInstance = ref<InstanceType<typeof MapFactor>>()
 const isCheckFactor = ref(false)
 const changeFactorCheck = () => (isCheckFactor.value = !isCheckFactor.value)
 
@@ -15,7 +21,7 @@ const activeFactors = computed(() => factorInstance.value?.activeFactors ?? [])
 
 <template>
   <div class="flex h-full flex-col">
-    <PageHeader title="地面">
+    <PageHeader :title="title">
       <template #right>
         <div class="flex items-center justify-end">
           <van-icon name="photo-o" size="24" class="mr-2" />
@@ -30,6 +36,7 @@ const activeFactors = computed(() => factorInstance.value?.activeFactors ?? [])
     </PageHeader>
 
     <MapSizer />
+    <slot name="sizer"> </slot>
 
     <div class="relative flex-1">
       <GroundMap :factors="activeFactors" />

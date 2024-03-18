@@ -155,7 +155,7 @@ onMounted(() => {
         >
           <div>{{ getPopupLegendLabel(mapKey) }}</div>
           <div style="margin-right: 10px">:</div>
-          <div>{{ popupInfo.pointData[mapKey] }}</div>
+          <div class="text-[#7ad1db]">{{ popupInfo.pointData[mapKey] }}</div>
         </div>
       </template>
     </div>
