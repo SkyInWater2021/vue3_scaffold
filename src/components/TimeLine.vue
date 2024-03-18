@@ -3,6 +3,7 @@ interface PropsType {
   interval?: number
   ticks: string[]
   speed?: number
+  loop?: boolean
 }
 const props = withDefaults(defineProps<PropsType>(), { interval: 2, speed: 1 })
 
@@ -27,7 +28,7 @@ function play() {
   playTimer = setInterval(() => {
     currentTickIndex.value++
     if (currentTickIndex.value > maxTick.value) {
-      stop()
+      props.loop ? (currentTickIndex.value = 0) : stop()
     }
   }, props.speed * 1000)
 }
@@ -49,7 +50,16 @@ function getDotOffset() {
   if (index > middleIndex) return { right: finalOffset }
 }
 
-defineExpose({ currentTickIndex, currentTick } as const)
+function changeTick(type: "forward" | "back", step = 1) {
+  const totalTicks = maxTick.value + 1
+  if (type === "forward") {
+    currentTickIndex.value = (currentTickIndex.value + step) % totalTicks
+  } else if (type === "back") {
+    currentTickIndex.value = (currentTickIndex.value - step + totalTicks) % totalTicks
+  }
+}
+
+defineExpose({ currentTickIndex, currentTick, stop, changeTick } as const)
 </script>
 
 <template>

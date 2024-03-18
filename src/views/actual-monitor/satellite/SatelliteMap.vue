@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Map } from "ol"
 
-import { chengDuLayer, chinaBoundary, ciaLayer } from "@/views/com-layers"
+import { chengDuPosition, chinaBoundary, ciaLayer } from "@/views/com-layers"
 
 import BaseMap from "./BaseMap.vue"
 import { legend } from "./config"
@@ -63,7 +63,7 @@ function renderRaster() {
 // 添加其他图层
 function addLayers() {
   mapInstance.value?.addLayer(chinaBoundary)
-  mapInstance.value?.addLayer(chengDuLayer)
+  mapInstance.value?.addLayer(chengDuPosition)
   mapInstance.value?.addLayer(ciaLayer)
 }
 

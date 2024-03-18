@@ -2,7 +2,7 @@
 import CME2D from "CME2D"
 import { Map } from "ol"
 
-import { CHENG_DU_LON_LAT, TDT_GRAPH } from "@/global"
+import { CHENG_DU_LON_LAT, TDT_GRAPH } from "@/views/com-layers"
 
 const emit = defineEmits<{ loaded: [instance: Map] }>()
 

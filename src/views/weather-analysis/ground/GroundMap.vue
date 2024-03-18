@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { cloneDeep } from "lodash-es"
 
-import { CHENG_DU_LON_LAT } from "@/global"
 import { MapEvents } from "@/utils"
-import { chengDuLayer } from "@/views/com-layers"
+import { CHENG_DU_LON_LAT, chengDuPosition } from "@/views/com-layers"
 
 import MapBase from "./MapBase.vue"
 import { plotConfig } from "./config"
@@ -25,7 +24,7 @@ const isoLineInstance = ref() // 等值线渲染之后的回调值
 
 const mapLoaded = (instance: any) => {
   mapInstance.value = instance
-  mapInstance.value.addLayer(chengDuLayer)
+  mapInstance.value.addLayer(chengDuPosition)
 
   // 地图点击事件
   mapInstance.value!.on("click", (evt: any) => {
