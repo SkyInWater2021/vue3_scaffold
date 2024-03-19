@@ -14,15 +14,6 @@ class HYRequest {
 
   setupInterceptor() {
     this.instance.interceptors.request.use(
-      this.interceptorHooks?.requestInterceptor,
-      this.interceptorHooks?.requestInterceptorCatch,
-    )
-    this.instance.interceptors.response.use(
-      this.interceptorHooks?.responseInterceptor,
-      this.interceptorHooks?.responseInterceptorCatch,
-    )
-
-    this.instance.interceptors.request.use(
       config => config,
       err => err,
     )
@@ -30,6 +21,15 @@ class HYRequest {
     this.instance.interceptors.response.use(
       res => res,
       err => err,
+    )
+
+    this.instance.interceptors.request.use(
+      this.interceptorHooks?.requestInterceptor,
+      this.interceptorHooks?.requestInterceptorCatch,
+    )
+    this.instance.interceptors.response.use(
+      this.interceptorHooks?.responseInterceptor,
+      this.interceptorHooks?.responseInterceptorCatch,
     )
   }
 
@@ -77,4 +77,4 @@ const createCancelToken = (cancelFn: CancelRequest["create"]) => {
   return new axios.CancelToken(cancelFn)
 }
 
-export { HYRequest, createCancelToken }
+export { createCancelToken, HYRequest }

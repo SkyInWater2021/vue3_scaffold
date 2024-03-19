@@ -3,32 +3,50 @@ import GroundView from "../ground/GroundView.vue"
 
 import { heightItems } from "./config"
 
-const title = "高空"
+const currentHeight = ref<string>(String(heightItems[0].value))
 
-const currentHeight = ref(heightItems[0].value)
-function changeHour(type: "add" | "sub") {
+const showHeightPicker = ref(false)
+function handleConfirm({ selectedOptions }: any) {
+  currentHeight.value = selectedOptions[0].value
+  console.log(currentHeight.value, typeof currentHeight.value)
+  changeHeightPicker(false)
+}
+function changeHeightPicker(visible: boolean) {
+  showHeightPicker.value = visible
+}
+
+function changeHeight(type: "add" | "sub") {
   const length = heightItems.length
-  let index = heightItems.findIndex((item: any) => item.value === currentHeight.value)
+  let index = heightItems.findIndex((item: any) => String(item.value) === currentHeight.value)
   index = type === "add" ? (index + 1) % length : (index - 1 + length) % length
-  currentHeight.value = heightItems[index].value
+  currentHeight.value = String(heightItems[index].value)
 }
 </script>
 
 <template>
-  <GroundView :title="title">
+  <GroundView title="高空">
     <template #sizer>
       <div class="flex items-center pb-2">
-        <div class="mr-2.5 w-[40px] text-right">高度:</div>
+        <div class="mr-1 w-[40px] text-right">高度:</div>
         <div class="flex flex-1 items-center">
-          <van-button size="small" icon="arrow-up" @click="changeHour('sub')" />
+          <van-button size="small" icon="arrow-up" @click="changeHeight('sub')" />
           <div class="mx-1 w-[80px]">
-            <van-dropdown-menu
-              style="--van-dropdown-menu-height: 26px; --van-dropdown-menu-title-font-size: 14px"
-            >
-              <van-dropdown-item v-model="currentHeight" :options="heightItems" />
-            </van-dropdown-menu>
+            <van-field
+              v-model="currentHeight"
+              readonly
+              colon
+              type="number"
+              @click="changeHeightPicker(true)"
+            />
+            <van-popup v-model:show="showHeightPicker" position="bottom">
+              <van-picker
+                :columns="heightItems"
+                @confirm="handleConfirm"
+                @cancel="changeHeightPicker(false)"
+              />
+            </van-popup>
           </div>
-          <van-button size="small" icon="arrow-down" @click="changeHour('add')" />
+          <van-button size="small" icon="arrow-down" @click="changeHeight('add')" />
         </div>
       </div>
     </template>
@@ -36,12 +54,5 @@ function changeHour(type: "add" | "sub") {
 </template>
 
 <style scoped>
-@import url("../ground//sizer-style.css");
-
-/* 弹出层 */
-:deep(.van-popup--top) {
-  top: 2px;
-  left: 87px;
-  width: 80px;
-}
+@import url("../ground//sizer.css");
 </style>

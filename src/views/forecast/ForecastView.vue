@@ -4,6 +4,6 @@ import { PageHeader } from "@/components"
 
 <template>
   <div class="">
-    <PageHeader title="天气预报" />
+    <PageHeader title="DEMO 页面" />
   </div>
 </template>

@@ -1,1 +1,1 @@
-export const DEMO_NAME = "测试产量"
+export const DEMO_NAME = "测试常量"

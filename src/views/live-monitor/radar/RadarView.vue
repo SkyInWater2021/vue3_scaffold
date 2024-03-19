@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { TimeLine } from "@/components"
+import { PageLoading, TimeLine } from "@/components"
 import { dateFormat } from "@/utils"
 
 import RadarMap from "./MapRadar.vue"
@@ -39,12 +39,7 @@ onMounted(() => {
   <div class="relative h-full">
     <RadarMap :currentIndex="currentTickIndex" />
 
-    <!-- * loading -->
-    <van-overlay :show="loading" z-index="99" style="--van-overlay-background: transparent">
-      <div class="absolute inset-0 flex items-center justify-center">
-        <van-loading type="spinner" size="24" vertical color="#4187f2"> 加载中... </van-loading>
-      </div>
-    </van-overlay>
+    <PageLoading :loading="loading" />
 
     <!-- * title -->
     <div class="float float-title">

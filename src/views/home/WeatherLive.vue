@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { homeApi } from "@/api/home"
 import type { Daily, Now } from "@/api/home/types"
-import { useWeatherIcon } from "@/hooks"
-import { dateFormat, getCnWeek, traditionalDate } from "@/utils"
+import { PageLoading } from "@/components"
+import { dateFormat, getCnWeek, getWeatherIcon, traditionalDate } from "@/utils"
 
 const info = reactive({
   location: "",
@@ -47,21 +47,22 @@ function fetchLiveData() {
     .finally(() => (fetchLoading.value = false))
 }
 
-function getWeatherIcon(num: number) {
-  return useWeatherIcon(String(num), "png")
+function getIcon(num: number) {
+  return getWeatherIcon(String(num), "png")
 }
 
 fetchLiveData()
 </script>
 
 <template>
+  <PageLoading :loading="fetchLoading" />
   <van-swipe indicator-color="white">
     <van-swipe-item v-for="item in 2" :key="item" class="py-2.5 text-white">
       <div class="p-2.5">{{ info.location }}</div>
 
       <div class="flex items-center px-4 pb-2.5">
         <div class="flex w-[20%] items-center justify-center">
-          <img :src="getWeatherIcon(0)" />
+          <img :src="getIcon(0)" />
         </div>
 
         <div class="flex-1 text-center font-extralight">
@@ -105,11 +106,8 @@ fetchLiveData()
           <div v-for="item in dailyForecast" :key="item.date" class="text-center">
             <div class="mb-2">{{ getCnWeek(item.date) }}</div>
             <div class="mb-2">{{ dateFormat(item.date, "M/D") }}</div>
-            <img class="mx-auto mb-2 aspect-square h-[14px]" :src="getWeatherIcon(item.dayCode)" />
-            <img
-              class="mx-auto mb-2 aspect-square h-[14px]"
-              :src="getWeatherIcon(item.nightCode)"
-            />
+            <img class="mx-auto mb-2 aspect-square h-[14px]" :src="getIcon(item.dayCode)" />
+            <img class="mx-auto mb-2 aspect-square h-[14px]" :src="getIcon(item.nightCode)" />
             <div>{{ item.low + "/" + item.high }}℃</div>
           </div>
         </div>

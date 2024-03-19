@@ -7,6 +7,7 @@ Locale.use("zh-CN", zhCN)
 const isFirstLoad = ref(true)
 const handleEnter = () => (isFirstLoad.value = false)
 
+// 移动端设置视口高度,不能使用100vh
 const documentHeight = () => {
   const doc = document.documentElement
   doc.style.setProperty("--doc-height", `${window.innerHeight}px`)

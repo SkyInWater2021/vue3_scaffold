@@ -1,8 +1,8 @@
 export const speedOptions = [
-  { text: "×0.5", value: 2 },
+  { text: "×0.5", value: 0.5 },
   { text: "×1", value: 1 },
-  { text: "×2", value: 0.5 },
-  { text: "×4", value: 0.25 },
+  { text: "×2", value: 2 },
+  { text: "×4", value: 4 },
 ]
 export const classifyOptions = [
   { text: "四川拼图", value: "四川拼图", title: "四川省雷达拼图" },

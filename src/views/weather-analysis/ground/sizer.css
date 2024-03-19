@@ -1,0 +1,15 @@
+/* stylelint-disable selector-pseudo-class-no-unknown */
+.van-button {
+  height: 30px;
+}
+
+.van-cell {
+  padding: 0;
+}
+
+:deep(.van-field__control) {
+  height: 30px;
+  text-align: center;
+  border: 1px solid var(--global-gray-5);
+  border-radius: 4px;
+}

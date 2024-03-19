@@ -1,82 +1,86 @@
 <script lang="ts" setup>
 interface PropsType {
-  interval?: number
-  ticks: string[]
-  speed?: number
-  loop?: boolean
+  interval?: number // 显示刻度线间隔
+  ticks: string[] // 当前时间刻度数组
+  speed?: number // 播放速度
+  loop?: boolean // 是否循环播放
 }
 const props = withDefaults(defineProps<PropsType>(), { interval: 2, speed: 1 })
 
 const lineConfig = {
   activeColor: "#4c84f7",
-  inactiveColor: "var(--van-gray-3)",
+  inactiveColor: "#d1d1d1",
   width: "2px",
   widthVal: 2,
 }
 
-const currentTickIndex = ref(0)
-
 const isPlaying = ref(false)
-const maxTick = computed(() => props.ticks.length - 1)
-const currentTick = computed(() => props.ticks[currentTickIndex.value] ?? "")
-const playSwitching = () => (isPlaying.value ? stop() : play())
+const maxTickIndex = computed(() => props.ticks.length - 1) // 最大刻度索引
 
-let playTimer = 0
+const currentTickIndex = ref(0) // 当前刻度索引
+const currentTick = computed(() => props.ticks[currentTickIndex.value] ?? "") // 当前刻度值
+
+// 切换播放状态
+const togglePlay = () => (isPlaying.value ? stop() : play())
+
+let playTimer: ReturnType<typeof setInterval>
+
+// 开始播放
 function play() {
   isPlaying.value = true
-  currentTickIndex.value = 0
+  if (currentTickIndex.value >= maxTickIndex.value) currentTickIndex.value = 0
+
   playTimer = setInterval(() => {
-    currentTickIndex.value++
-    if (currentTickIndex.value > maxTick.value) {
+    if (currentTickIndex.value >= maxTickIndex.value) {
       props.loop ? (currentTickIndex.value = 0) : stop()
-    }
-  }, props.speed * 1000)
+    } else currentTickIndex.value++
+  }, 1000 / props.speed)
 }
 
+// 停止播放
 function stop() {
   isPlaying.value = false
-  currentTickIndex.value = 0
   if (playTimer) clearInterval(playTimer)
 }
+
+onUnmounted(() => {
+  clearInterval(playTimer)
+})
 
 // 轴的小点偏移纠正
 function getDotOffset() {
   const index = currentTickIndex.value
-  const middleIndex = maxTick.value / 2
-  const oneOffset = Number((lineConfig.widthVal / maxTick.value).toFixed(1))
-  const offsetPart = Math.abs(index - middleIndex)
-  const finalOffset = (offsetPart * oneOffset).toFixed(1) + "px"
-  if (index <= middleIndex) return { left: finalOffset }
-  if (index > middleIndex) return { right: finalOffset }
+  const mid = maxTickIndex.value / 2
+  const oneOffset = (2 / maxTickIndex.value).toFixed(1)
+  const offset = Math.abs(index - mid) * parseFloat(oneOffset)
+  return index <= mid ? { left: `${offset}px` } : { right: `${offset}px` }
 }
 
-function changeTick(type: "forward" | "back", step = 1) {
-  const totalTicks = maxTick.value + 1
-  if (type === "forward") {
-    currentTickIndex.value = (currentTickIndex.value + step) % totalTicks
-  } else if (type === "back") {
-    currentTickIndex.value = (currentTickIndex.value - step + totalTicks) % totalTicks
-  }
+function changeTick(direction: "forward" | "back", step = 1) {
+  currentTickIndex.value =
+    direction === "forward"
+      ? (currentTickIndex.value + step) % (maxTickIndex.value + 1)
+      : (currentTickIndex.value - step + maxTickIndex.value + 1) % (maxTickIndex.value + 1)
 }
 
-defineExpose({ currentTickIndex, currentTick, stop, changeTick } as const)
+defineExpose({ currentTickIndex, currentTick, stop, changeTick })
 </script>
 
 <template>
   <div class="time-line-wrapper">
-    <div class="mx-2.5 pr-2.5">
+    <div class="mx-2.5">
       <van-icon
         size="30"
         :name="isPlaying ? 'stop-circle' : 'play-circle'"
         :color="lineConfig.activeColor"
-        @click="playSwitching"
+        @click="togglePlay"
       />
     </div>
 
     <div class="time-slider">
       <van-slider
         v-model="currentTickIndex"
-        :max="maxTick"
+        :max="maxTickIndex"
         :bar-height="lineConfig.width"
         :inactive-color="lineConfig.inactiveColor"
         :active-color="lineConfig.activeColor"
@@ -126,8 +130,8 @@ defineExpose({ currentTickIndex, currentTick, stop, changeTick } as const)
   width: 14px;
   height: 14px;
   background-image: radial-gradient(
-    v-bind("lineConfig.inactiveColor") 0%,
-    v-bind("lineConfig.inactiveColor") 30%,
+    white 0%,
+    white 30%,
     v-bind("lineConfig.activeColor") 30%,
     v-bind("lineConfig.activeColor") 100%
   );
@@ -136,13 +140,13 @@ defineExpose({ currentTickIndex, currentTick, stop, changeTick } as const)
 
 .tick {
   position: relative;
-  z-index: -1;
+  z-index: -1; /* 保证在小点的下方 */
   width: v-bind("lineConfig.width");
-  height: 35px;
+  height: 30px;
   background-image: linear-gradient(
     v-bind("lineConfig.inactiveColor") 0%,
-    v-bind("lineConfig.inactiveColor") 40%,
-    transparent 40%,
+    v-bind("lineConfig.inactiveColor") 35%,
+    transparent 35%,
     transparent 100%
   );
 }
@@ -173,8 +177,8 @@ defineExpose({ currentTickIndex, currentTick, stop, changeTick } as const)
   background-image: linear-gradient(
     to bottom,
     v-bind("lineConfig.activeColor") 0%,
-    v-bind("lineConfig.activeColor") 40%,
-    transparent 40%,
+    v-bind("lineConfig.activeColor") 35%,
+    transparent 35%,
     transparent 100%
   );
 }
@@ -183,7 +187,7 @@ defineExpose({ currentTickIndex, currentTick, stop, changeTick } as const)
   position: absolute;
   top: 0;
   bottom: 0;
-  width: calc(v-bind("currentTickIndex") / v-bind("maxTick") * 100%);
+  width: calc(v-bind("currentTickIndex") / v-bind("maxTickIndex") * 100%);
   background: #4c84f722;
 }
 </style>

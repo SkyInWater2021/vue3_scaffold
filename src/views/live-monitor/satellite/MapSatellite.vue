@@ -3,7 +3,7 @@ import { Map } from "ol"
 
 import { chengDuPosition, chinaBoundary, ciaLayer } from "@/views/com-layers"
 
-import BaseMap from "./BaseMap.vue"
+import BaseMap from "./MapBase.vue"
 import { legend } from "./config"
 
 interface PropType {
