@@ -2,9 +2,9 @@ import path from "path"
 
 import { defineConfig, loadEnv } from "vite"
 
-import { useBuild } from "./build/build"
-import { usePlugins } from "./build/plugins"
-import { useServe } from "./build/server"
+import { useBuild } from "./vite/build"
+import { usePlugins } from "./vite/plugins"
+import { useServe } from "./vite/server"
 
 const rootSrc = path.resolve(__dirname, "src")
 

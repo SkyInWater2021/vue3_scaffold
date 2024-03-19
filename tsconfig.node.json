@@ -9,8 +9,8 @@
   },
   "include": [
     "vite.config.ts",
-    "build/**/*.ts",
-    "build/**/*.d.ts",
+    "vite/**/*.ts",
+    "vite/**/*.d.ts",
     "types/**/*.d.ts",
     "src/vite-env.d.ts"
   ]
