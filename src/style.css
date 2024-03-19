@@ -1,8 +1,11 @@
+/* 自定义tailwindcss基础样式 https://unpkg.com/browse/tailwindcss@3.4.1/src/css/preflight.css */
+@import url("./styles//prelight.css");
 @import url("./styles/tailwindcss-base.css");
 @import url("./styles/tailwindcss-components.css");
 @import url("./styles/tailwindcss-utilities.css");
 
 :root {
+  --doc-height: 100%;
   --global-gray: #767676;
   --global-gray-a: #767676aa;
   --global-gray-5: #76767655;

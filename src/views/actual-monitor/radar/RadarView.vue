@@ -70,7 +70,7 @@ onMounted(() => {
     </div>
 
     <!-- * tick -->
-    <div class="absolute bottom-2 left-[2%] z-50 w-[96%] rounded bg-white">
+    <div class="absolute bottom-2 left-[2%] z-[99] w-[96%] rounded bg-white">
       <TimeLine ref="timeLineRef" :ticks="ticks" :speed="speed" :loop="loop" />
       <div class="absolute right-0 top-[-24px] w-fit rounded bg-white px-2.5">
         <span> {{ dateFormat(new Date(), "YYYY-MM-DD HH:") }}</span>

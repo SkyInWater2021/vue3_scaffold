@@ -6,13 +6,17 @@ Locale.use("zh-CN", zhCN)
 
 const isFirstLoad = ref(true)
 const handleEnter = () => (isFirstLoad.value = false)
+
+const documentHeight = () => {
+  const doc = document.documentElement
+  doc.style.setProperty("--doc-height", `${window.innerHeight}px`)
+}
+window.addEventListener("resize", documentHeight)
+documentHeight()
 </script>
 
 <template>
-  <div
-    class="relative h-screen w-screen overflow-hidden"
-    :class="isFirstLoad ? '' : 'app-container'"
-  >
+  <div class="app-wrapper" :class="isFirstLoad ? '' : 'app-container'">
     <router-view v-slot="{ Component, route }">
       <transition
         :name="route.meta.title === '首页' ? 'slide-right' : 'slide-left'"
@@ -27,6 +31,20 @@ const handleEnter = () => (isFirstLoad.value = false)
 </template>
 
 <style scoped>
+:root {
+  --doc-height: 100%;
+}
+
+.app-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: var(--doc-height);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .app-container .slide-left-enter-from,
 .app-container .slide-right-leave-to,
 .app-container .slide-right-enter-from,

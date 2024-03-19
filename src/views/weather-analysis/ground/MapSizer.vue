@@ -34,8 +34,8 @@ changeCurrentInfo()
 
 <template>
   <div class="flex flex-wrap items-center">
-    <div class="mt-2 w-[40px] text-right">时间:</div>
-    <div class="100px mt-2">
+    <div class="my-2 w-[40px] text-right">时间:</div>
+    <div class="100px my-2">
       <van-field
         label-width="fit-content"
         v-model="currentDate"
@@ -54,7 +54,7 @@ changeCurrentInfo()
       </van-popup>
     </div>
 
-    <div class="mr-2.5 mt-2 w-[80px]">
+    <div class="my-2 mr-2.5 w-[80px]">
       <van-dropdown-menu
         style="--van-dropdown-menu-height: 26px; --van-dropdown-menu-title-font-size: 14px"
       >
@@ -62,7 +62,7 @@ changeCurrentInfo()
       </van-dropdown-menu>
     </div>
 
-    <div class="mt-2 min-w-[120px] flex-1">
+    <div class="my-2 min-w-[120px] flex-1">
       <van-button size="small" icon="arrow-left" @click="changeHour('sub')" />
       <van-button class="!mx-1" size="small" type="primary">最新</van-button>
       <van-button size="small" icon="arrow" @click="changeHour('add')" />

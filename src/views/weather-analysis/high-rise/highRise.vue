@@ -17,7 +17,7 @@ function changeHour(type: "add" | "sub") {
 <template>
   <GroundView :title="title">
     <template #sizer>
-      <div class="mt-2 flex items-center pb-2">
+      <div class="flex items-center pb-2">
         <div class="mr-2.5 w-[40px] text-right">高度:</div>
         <div class="flex flex-1 items-center">
           <van-button size="small" icon="arrow-up" @click="changeHour('sub')" />

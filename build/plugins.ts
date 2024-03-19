@@ -14,7 +14,7 @@ export function usePlugins(env: Record<string, string>) {
 
     createSvgIconsPlugin({
       iconDirs: [path.resolve(process.cwd(), "src/assets/cpn-icons")],
-      symbolId: "[name]",
+      symbolId: "icon-[dir]-[name]",
     }),
 
     Components({
