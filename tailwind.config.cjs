@@ -8,7 +8,7 @@ module.exports = {
         textGray: "var(--global-gray)",
       },
       backgroundColor: {
-        headerBg: "var(--global-blue)",
+        headerBg: "var(--van-blue)",
       },
     },
   },

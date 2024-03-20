@@ -10,15 +10,15 @@ const mapRef = ref<InstanceType<typeof SatelliteMap>>()
 
 const currentTab = ref(tabOptions[0].name)
 const currentSatelliteType = ref<string | number | undefined>(findTabOptions()[0]?.value)
+const currentOptions = computed(findTabOptions)
 
-// 当前下拉选项
-const currentOptions = computed(() => {
-  const options = findTabOptions()
-  currentSatelliteType.value = options[0].value
-  return options
-})
 function findTabOptions() {
-  return tabOptions.find(item => item.name === currentTab.value)?.options ?? []
+  const tabInfo = tabOptions.find(item => item.name === currentTab.value)
+  return tabInfo?.options ?? []
+}
+function handleTabChange() {
+  timeLineRef.value?.stop()
+  currentSatelliteType.value = findTabOptions()[0]?.value
 }
 
 const ticks = ["11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10"]
@@ -26,6 +26,7 @@ const currentTickIndex = computed(() => timeLineRef.value?.currentTickIndex ?? 0
 
 const showPicker = ref(false)
 function changePickerVisible(visible: boolean) {
+  timeLineRef.value?.stop()
   showPicker.value = visible
 }
 function handleConfirm({ selectedOptions }: any) {
@@ -38,7 +39,13 @@ function handleConfirm({ selectedOptions }: any) {
   <div class="flex h-full flex-col">
     <PageHeader title="卫星云图" />
 
-    <van-tabs v-model:active="currentTab" title-active-color="black" color="black" line-width="30">
+    <van-tabs
+      v-model:active="currentTab"
+      @change="handleTabChange"
+      title-active-color="black"
+      color="black"
+      line-width="30"
+    >
       <van-tab v-for="tab in tabOptions" :title="tab.title" :name="tab.name" :key="tab.name" />
     </van-tabs>
 
@@ -50,7 +57,7 @@ function handleConfirm({ selectedOptions }: any) {
       <van-button size="small" @click="changePickerVisible(true)" icon-position="right">
         {{ currentSatelliteType }}
         <template #icon>
-          <van-icon name="label" color="var(--global-blue)" />
+          <van-icon name="label" color="var(--van-blue)" />
         </template>
       </van-button>
       <van-popup v-model:show="showPicker" position="bottom">

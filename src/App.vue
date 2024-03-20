@@ -14,6 +14,22 @@ const documentHeight = () => {
 }
 window.addEventListener("resize", documentHeight)
 documentHeight()
+
+// 禁止左右滑动控制前进后退
+document.addEventListener("touchstart", handleTouchStart, { passive: false })
+document.addEventListener("touchmove", handleTouchMove, { passive: false })
+let startX: number
+function handleTouchStart(e: TouchEvent) {
+  startX = e.touches[0].pageX
+}
+function handleTouchMove(e: TouchEvent) {
+  const moveX = e.touches[0].pageX
+  const diffX = moveX - startX
+  if (Math.abs(diffX) > 5) {
+    // 假定滑动阈值为5，可按需调整
+    e.preventDefault()
+  }
+}
 </script>
 
 <template>
@@ -23,7 +39,8 @@ documentHeight()
         :name="route.meta.title === '首页' ? 'slide-right' : 'slide-left'"
         @enter="handleEnter"
       >
-        <keep-alive :include="['HomeView']">
+        <!-- :include="['HomeView']" -->
+        <keep-alive>
           <component :is="Component" :key="route.path" />
         </keep-alive>
       </transition>

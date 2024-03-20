@@ -63,7 +63,7 @@ defineExpose({ activeFactors })
 
 .factor-item.is-active {
   background-color: white;
-  border: 1px solid var(--global-blue);
+  border: 1px solid var(--van-blue);
 }
 
 .factor-item:last-child {

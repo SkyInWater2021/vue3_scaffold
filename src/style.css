@@ -10,5 +10,11 @@
   --global-gray-a: #767676aa;
   --global-gray-5: #76767655;
   --global-pewter: #a7b6cd;
-  --global-blue: #5aa0f4;
+}
+
+:root .van-field__control {
+  height: 30px;
+  text-align: center;
+  border: 1px solid var(--global-gray-5);
+  border-radius: 4px;
 }

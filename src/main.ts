@@ -1,5 +1,6 @@
 import "./style.css"
 
+import { CME_MeteoSinglePoint } from "CME-MeteoSinglePoint"
 import { CME_RasterRender } from "CME-RasterRender"
 import { CME_ArrowRender, CME_GridRender, CME_IsolineRender, CME_WindyBarb } from "CME_GridLayer" // 基础图层渲染
 import { CME_MeteoMap } from "CME_MeteoMap"
@@ -22,6 +23,7 @@ app.use(CME_GridRender)
 app.use(CME_IsolineRender)
 app.use(CME_ArrowRender)
 app.use(CME_RasterRender)
+app.use(CME_MeteoSinglePoint)
 
 app.use(Icon)
 app.use(store)
