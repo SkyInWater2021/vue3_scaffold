@@ -40,10 +40,10 @@ function handleConfirm({ selectedOptions }: any) {
 
     <van-tabs
       v-model:active="currentTab"
+      @change="handleTabChange"
       title-active-color="black"
       color="black"
       line-width="30"
-      @change="handleTabChange"
     >
       <van-tab v-for="tab in tabOptions" :title="tab.title" :name="tab.name" :key="tab.name" />
     </van-tabs>

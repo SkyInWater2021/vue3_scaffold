@@ -1,22 +1,25 @@
 <script lang="ts" setup>
-import { PageLoading, TimeLine } from "@/components"
 import { dateFormat } from "@/utils"
+import { PageLoading, TimeShaft } from "@/views/components"
 
-import RadarMap from "./MapRadar.vue"
+import RadarMap from "./RadarMap.vue"
 import Setting from "./RadarSetting.vue"
 import { classifyOptions } from "./config"
 
-const loading = ref(false)
 const router = useRouter()
+
+const settingRef = ref<InstanceType<typeof Setting>>()
+const timeLineRef = ref<InstanceType<typeof TimeShaft>>()
+
+const loading = ref(false)
 const title = ref("四川省雷达拼图(组合反射率)")
+
+const ticks = ["11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10"]
+const currentTickIndex = ref(0)
 
 const speed = computed(() => settingRef.value?.formData?.speed ?? 1)
 const loop = computed(() => settingRef.value?.formData?.isLoop ?? false)
-const timeLineRef = ref<InstanceType<typeof TimeLine>>()
-const ticks = ["11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10"]
-const currentTickIndex = computed(() => timeLineRef.value?.currentTickIndex ?? 0)
 
-const settingRef = ref<InstanceType<typeof Setting>>()
 function handleSettingConfirm() {
   loading.value = true
   const { formData } = settingRef.value!
@@ -24,12 +27,16 @@ function handleSettingConfirm() {
   title.value = `${str ?? ""}(${formData.radar})`
   // TODO 请求数据
   // ticks.value = [...]
+  console.log("当前设置信息🍊🍊:", formData)
   loading.value = false
 }
+
+// 弹出设置框
 function handleSettingShow() {
   timeLineRef.value?.stop()
   settingRef.value?.changeOverlay(true)
 }
+
 onMounted(() => {
   handleSettingConfirm()
 })
@@ -42,7 +49,7 @@ onMounted(() => {
     <PageLoading :loading="loading" />
 
     <!-- * title -->
-    <div class="float float-title">
+    <div class="welding welding-title">
       <van-button icon="arrow-left" size="small" type="primary" round @click="router.back" />
       <div class="text-center">
         <div class="text-lg">{{ title }}</div>
@@ -51,7 +58,7 @@ onMounted(() => {
     </div>
 
     <!-- * changeTick -->
-    <div class="float float-arrow left-0">
+    <div class="welding welding-arrow left-0">
       <van-icon
         name="play"
         class="rotate-180"
@@ -60,16 +67,22 @@ onMounted(() => {
         @click="timeLineRef?.changeTick('back')"
       />
     </div>
-    <div class="float float-arrow right-0">
+    <div class="welding welding-arrow right-0">
       <van-icon name="play" size="40" color="#eee" @click="timeLineRef?.changeTick('forward')" />
     </div>
 
     <!-- * tick -->
     <div class="absolute bottom-2 left-[2%] z-[99] w-[96%] rounded bg-white">
-      <TimeLine ref="timeLineRef" :ticks="ticks" :speed="speed" :loop="loop" />
+      <TimeShaft
+        ref="timeLineRef"
+        v-model="currentTickIndex"
+        :ticks="ticks"
+        :speed="speed"
+        :loop="loop"
+      />
       <div class="absolute right-0 top-[-24px] w-fit rounded bg-white px-2.5">
         <span> {{ dateFormat(new Date(), "YYYY-MM-DD HH:") }}</span>
-        <span>{{ timeLineRef?.currentTick }}</span>
+        <span>{{ ticks[currentTickIndex] }}</span>
         <span> BJT </span>
       </div>
     </div>
@@ -80,12 +93,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.float {
+.welding {
   position: absolute;
   z-index: 9;
 }
 
-.float-title {
+.welding-title {
   top: 10px;
   right: 10px;
   left: 10px;
@@ -95,7 +108,7 @@ onMounted(() => {
   color: black;
 }
 
-.float-arrow {
+.welding-arrow {
   top: 50%;
   display: flex;
   align-items: center;

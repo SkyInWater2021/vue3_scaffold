@@ -8,13 +8,11 @@ const currentHeight = ref<string>(String(heightItems[0].value))
 const showHeightPicker = ref(false)
 function handleConfirm({ selectedOptions }: any) {
   currentHeight.value = selectedOptions[0].value
-  console.log(currentHeight.value, typeof currentHeight.value)
   changeHeightPicker(false)
 }
 function changeHeightPicker(visible: boolean) {
   showHeightPicker.value = visible
 }
-
 function changeHeight(type: "add" | "sub") {
   const length = heightItems.length
   let index = heightItems.findIndex((item: any) => String(item.value) === currentHeight.value)
@@ -26,16 +24,22 @@ function changeHeight(type: "add" | "sub") {
 <template>
   <GroundView title="高空">
     <template #sizer>
-      <div class="flex items-center pb-2">
+      <div class="flex items-center">
         <div class="mr-1 w-[40px] text-right">高度:</div>
         <div class="flex flex-1 items-center">
-          <van-button size="small" icon="arrow-up" @click="changeHeight('sub')" />
+          <van-button
+            size="small"
+            icon="arrow-up"
+            style="height: 26px"
+            @click="changeHeight('sub')"
+          />
           <div class="mx-1 w-[80px]">
             <van-field
               v-model="currentHeight"
               readonly
               colon
               type="number"
+              name="borderPicker"
               @click="changeHeightPicker(true)"
             />
             <van-popup v-model:show="showHeightPicker" position="bottom">
@@ -46,13 +50,14 @@ function changeHeight(type: "add" | "sub") {
               />
             </van-popup>
           </div>
-          <van-button size="small" icon="arrow-down" @click="changeHeight('add')" />
+          <van-button
+            size="small"
+            icon="arrow-down"
+            style="height: 26px"
+            @click="changeHeight('add')"
+          />
         </div>
       </div>
     </template>
   </GroundView>
 </template>
-
-<style scoped>
-@import url("../ground//sizer.css");
-</style>

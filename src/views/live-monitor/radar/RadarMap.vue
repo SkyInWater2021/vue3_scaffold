@@ -2,8 +2,9 @@
 import { Map } from "ol"
 
 import { CHENG_DU_LON_LAT, chengDuPosition, ciaLayer, sichuanBoundary } from "@/views/com-layers"
+import { PageBaseMap } from "@/views/components"
 
-import BaseMap from "./MapBase.vue"
+const initZoom = 5
 
 const gridRenderRef = ref()
 const gridRenderInstance = ref()
@@ -25,7 +26,7 @@ function resetMapCenter() {
   if (!mapInstance.value) return
   const view = mapInstance.value.getView()
   view.setCenter([...CHENG_DU_LON_LAT])
-  view.setZoom(5)
+  view.setZoom(initZoom)
 }
 
 function addSpot() {
@@ -70,7 +71,7 @@ function addSpot() {
 
 <template>
   <div class="relative h-full">
-    <BaseMap @loaded="mapLoaded" />
+    <PageBaseMap map-id="liveMonitorRadarMapId" :zoom="initZoom" @loaded="mapLoaded" />
     <CME_GridRender ref="gridRenderRef" />
 
     <div class="absolute right-2.5 top-[60px] rounded bg-[#fffc] p-1">

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { chengDuPosition, ciaLayer, sichuanBoundary } from "@/views/com-layers"
+import { PageBaseMap } from "@/views/components"
 
-import BaseMap from "./MapBase.vue"
 import tempData from "./tempData.json"
 
 const singlePointRef = ref()
@@ -40,22 +40,20 @@ function addWebGLPoint() {
       [100, 100, 100],
     ],
     "icon-offset": ["match", ["get", pngField], "shape", [0, 32], [32, 0]],
-    "icon-size": [32, 32], //图标的大小
-    "icon-scale": 0.4, //图标的缩放
+    "icon-size": [32, 32],
+    "icon-scale": 0.4,
   }
   let config = {
     map: mapInstance.value,
     config: {
-      style: style, //样式
-      features: tempData, //数据
-      lon: "Lon", //经度对应的字段
-      lat: "Lat", // 纬度对应的字段
-      pngField: "shape", //图片对应的字段
-      filedName: colorFiled, //渲染的字段  颜色对应的字段 颜色根据该字段值渲染不同的颜色
+      style: style,
+      features: tempData,
+      lon: "Lon",
+      lat: "Lat",
+      pngField: "shape",
+      filedName: colorFiled,
     },
   }
-
-  console.log(singlePointRef.value)
   singlePointRef.value.addWebGLCutsomPointLayer(config)
 }
 
@@ -65,8 +63,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-full">
-    <BaseMap @loaded="mapLoaded" />
+  <div>
+    <PageBaseMap mapId="liveMonitorGroundMapId" @loaded="mapLoaded" />
     <CME_MeteoSinglePoint ref="singlePointRef" />
   </div>
 </template>

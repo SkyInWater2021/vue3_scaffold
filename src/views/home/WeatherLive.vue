@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { homeApi } from "@/api/home"
 import type { Daily, Now } from "@/api/home/types"
-import { PageLoading } from "@/components"
+import { useHomeStore } from "@/store/home"
 import { dateFormat, getCnWeek, getWeatherIcon, traditionalDate } from "@/utils"
+import { DividerLine, PageLoading } from "@/views/components"
+
+const homeStore = useHomeStore()
 
 const info = reactive({
   location: "",
@@ -41,6 +44,7 @@ function fetchLiveData() {
         info.updateTime = lastUpdate.split(" ").pop() ?? ""
         dailyForecast.value = daily
         nowWeather.value = now
+        homeStore.setPosition(location.longitude, location.latitude)
       }
     })
     .catch(() => console.error("fetch weatherLive error"))

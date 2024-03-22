@@ -42,11 +42,10 @@ export const homeRoutes: ExtendedRouteRecordRaw[] = [
         path: "/live-monitor/lighting-monitor",
         name: "实况监测-雷电监测",
         meta: { title: "雷电监测", icon: getMenuIcon("闪电") },
-        component: () => import(`@/views/live-monitor/lighting/LightingMonitor.vue`),
+        component: () => import(`@/views/live-monitor/thunder/ThunderMonitor.vue`),
       },
     ],
   },
-
   {
     path: "/analysis",
     name: "天气分析",
@@ -65,6 +64,18 @@ export const homeRoutes: ExtendedRouteRecordRaw[] = [
         meta: { title: "高空", icon: getMenuIcon("高空") },
         component: () => import(`@/views/weather-analysis/high-rise/highRise.vue`),
       },
+      {
+        path: "/analysis/ec-thick",
+        name: "天气分析-EC-粗网格",
+        meta: { title: "EC-粗网格", icon: getMenuIcon("粗网格") },
+        component: () => import(`@/views/weather-analysis/EC-thick/ECThick.vue`),
+      },
+      {
+        path: "/analysis/ec-thin",
+        name: "天气分析-EC-细网格",
+        meta: { title: "EC-细网格", icon: getMenuIcon("细网格") },
+        component: () => import(`@/views/weather-analysis/EC-thin/ECThin.vue`),
+      },
     ],
   },
 
@@ -75,21 +86,18 @@ export const homeRoutes: ExtendedRouteRecordRaw[] = [
     meta: { title: "天气预报", icon: getMenuIcon("天气预报") },
     component: () => import("@/views/forecast/ForecastView.vue"),
   },
-
   {
     path: "/warning",
     name: "预警信息",
     meta: { title: "预警信息", icon: getMenuIcon("预警信息") },
     component: () => import("@/views/forecast/ForecastView.vue"),
   },
-
   {
     path: "/climate",
     name: "气候预测",
     meta: { title: "气候预测", icon: getMenuIcon("气候") },
     component: () => import("@/views/forecast/ForecastView.vue"),
   },
-
   {
     path: "/decision",
     name: "决策服务",

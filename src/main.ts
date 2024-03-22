@@ -1,3 +1,4 @@
+import "vant/lib/index.css"
 import "./style.css"
 
 import { CME_MeteoSinglePoint } from "CME-MeteoSinglePoint"
@@ -25,7 +26,9 @@ app.use(CME_ArrowRender)
 app.use(CME_RasterRender)
 app.use(CME_MeteoSinglePoint)
 
+// vant组件
 app.use(Icon)
+
 app.use(store)
 app.use(router)
 

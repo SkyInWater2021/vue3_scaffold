@@ -4,17 +4,26 @@ import { Map } from "ol"
 
 import { CHENG_DU_LON_LAT, TDT_GRAPH } from "@/views/com-layers"
 
-const emit = defineEmits<{ loaded: [instance: Map] }>()
+interface PropType {
+  mapId: string
+  zoom?: number
+  extent?: number[]
+}
 
-const MAP_CONTAINER = "SatelliteMapId"
+const props = withDefaults(defineProps<PropType>(), {
+  zoom: 4,
+  extent: () => [30, -30.5, 160, 80],
+})
+
+const emit = defineEmits<{ loaded: [instance: Map] }>()
 
 function initCMEMap() {
   const instance = new CME2D({
-    target: MAP_CONTAINER,
+    target: props.mapId,
     view: {
       projection: "EPSG:4326",
-      extent: [30, -30.5, 160, 80], // 世界范围限制
-      zoom: 4,
+      extent: props.extent,
+      zoom: props.zoom,
       minZoom: 1,
       center: [...CHENG_DU_LON_LAT],
     },
@@ -28,5 +37,5 @@ onMounted(() => initCMEMap())
 </script>
 
 <template>
-  <div :id="MAP_CONTAINER" class="h-full"></div>
+  <div :id="mapId" class="h-full"></div>
 </template>

@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BaseChart: typeof import('./../src/components/echarts/BaseChart.vue')['default']
     DividerLine: typeof import('./../src/components/DividerLine.vue')['default']
     PageHeader: typeof import('./../src/components/PageHeader.vue')['default']
     PageLoading: typeof import('./../src/components/PageLoading.vue')['default']
@@ -25,11 +26,11 @@ declare module 'vue' {
     VanField: typeof import('vant/es')['Field']
     VanForm: typeof import('vant/es')['Form']
     VanIcon: typeof import('vant/es')['Icon']
+    VanImage: typeof import('vant/es')['Image']
     VanLoading: typeof import('vant/es')['Loading']
     VanOverlay: typeof import('vant/es')['Overlay']
     VanPicker: typeof import('vant/es')['Picker']
     VanPickerGroup: typeof import('vant/es')['PickerGroup']
-    VanPopover: typeof import('vant/es')['Popover']
     VanPopup: typeof import('vant/es')['Popup']
     VanRadio: typeof import('vant/es')['Radio']
     VanRadioGroup: typeof import('vant/es')['RadioGroup']
@@ -40,5 +41,6 @@ declare module 'vue' {
     VanTab: typeof import('vant/es')['Tab']
     VanTabs: typeof import('vant/es')['Tabs']
     VanTimePicker: typeof import('vant/es')['TimePicker']
+    VanToast: typeof import('vant/es')['Toast']
   }
 }

@@ -1,0 +1,13 @@
+:root:root {
+  --van-cell-horizontal-padding: 4px;
+}
+
+:root .van-field__control[name="borderPicker"] {
+  text-align: center;
+  border: 1px solid var(--global-gray-5);
+  border-radius: 4px;
+}
+
+:root .van-cell.van-field {
+  padding: 4px 2px;
+}

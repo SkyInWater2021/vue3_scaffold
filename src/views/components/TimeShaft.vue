@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 interface PropsType {
-  interval?: number // 显示刻度线间隔
   ticks: string[] // 当前时间刻度数组
+  interval?: number // 显示刻度线间隔
   speed?: number // 播放速度
   loop?: boolean // 是否循环播放
 }
+
 const props = withDefaults(defineProps<PropsType>(), { interval: 2, speed: 1 })
 
 const lineConfig = {
@@ -17,8 +18,7 @@ const lineConfig = {
 const isPlaying = ref(false)
 const maxTickIndex = computed(() => props.ticks.length - 1) // 最大刻度索引
 
-const currentTickIndex = ref(0) // 当前刻度索引
-const currentTick = computed(() => props.ticks[currentTickIndex.value] ?? "") // 当前刻度值
+const currentTickIndex = defineModel<number>({ required: true }) // 当前刻度索引
 
 // 切换播放状态
 const togglePlay = () => (isPlaying.value ? stop() : play())
@@ -43,10 +43,6 @@ function stop() {
   if (playTimer) clearInterval(playTimer)
 }
 
-onUnmounted(() => {
-  clearInterval(playTimer)
-})
-
 // 轴的小点偏移纠正
 function getDotOffset() {
   const index = currentTickIndex.value
@@ -63,7 +59,11 @@ function changeTick(direction: "forward" | "back", step = 1) {
       : (currentTickIndex.value - step + maxTickIndex.value + 1) % (maxTickIndex.value + 1)
 }
 
-defineExpose({ currentTickIndex, currentTick, stop, changeTick })
+onUnmounted(() => {
+  clearInterval(playTimer)
+})
+
+defineExpose({ stop, changeTick })
 </script>
 
 <template>

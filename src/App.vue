@@ -39,7 +39,6 @@ function handleTouchMove(e: TouchEvent) {
         :name="route.meta.title === '首页' ? 'slide-right' : 'slide-left'"
         @enter="handleEnter"
       >
-        <!-- :include="['HomeView']" -->
         <keep-alive>
           <component :is="Component" :key="route.path" />
         </keep-alive>

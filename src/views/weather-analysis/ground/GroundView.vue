@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PageHeader } from "@/components"
+import { PageHeader } from "@/views/components"
 
 import GroundMap from "./GroundMap.vue"
 import MapFactor from "./MapFactor.vue"
@@ -36,6 +36,7 @@ const activeFactors = computed(() => factorInstance.value?.activeFactors ?? [])
     </PageHeader>
 
     <MapSizer />
+
     <slot name="sizer"> </slot>
 
     <div class="relative flex-1">

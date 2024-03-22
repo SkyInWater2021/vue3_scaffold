@@ -1,4 +1,4 @@
-export const classify = [
+export const checkBarClassify = [
   {
     title: "降水",
     name: "降水",
@@ -90,7 +90,7 @@ export const classify = [
   },
 ]
 
-export const sizer = [
+export const dropMenus = [
   {
     title: "区域",
     name: "area",
@@ -121,4 +121,17 @@ export const sizer = [
       { text: "5分钟", value: "5分钟" },
     ],
   },
+]
+
+export const checkLayerTypes = [
+  { title: "站点数据", name: "站点数据" },
+  { title: "色斑图", name: "色斑图" },
+]
+
+export const checkBoxItems = [
+  { value: "stationName", text: "站名" },
+  { value: "stationNum", text: "站号" },
+  { value: "normal", text: "正确" },
+  { value: "error", text: "错误", disabled: true },
+  { value: "dubious", text: "可疑", disabled: true },
 ]

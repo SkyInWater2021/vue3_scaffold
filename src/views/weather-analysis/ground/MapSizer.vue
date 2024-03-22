@@ -1,24 +1,12 @@
 <script lang="ts" setup>
 import { dateOffset } from "@/utils"
+import { SizerDatePicker } from "@/views/components"
 
 import { hourItems } from "./config"
 
 // ----- 时间筛选 -----
-const currentDate = ref("")
-const currentDateInfo = ref<string[]>([])
-const showDatePicker = ref(false)
-function changeDatePicker(visible: boolean, isConfirm = false) {
-  showDatePicker.value = visible
-  isConfirm
-    ? (currentDate.value = currentDateInfo.value.join("-"))
-    : (currentDateInfo.value = currentDate.value.split("-"))
-}
-function changeCurrentInfo() {
-  const utcStr = dateOffset({ utc: true, format: "YYYY-MM-DD" })
-  currentDate.value = utcStr
-  currentDateInfo.value = utcStr.split("-")
-}
-changeCurrentInfo()
+const formatted = "YYYY-MM-DD"
+const currentDate = ref(dateOffset({ format: formatted }))
 
 // ----- 日期筛选 -----
 const currentHour = ref(hourItems[0].value)
@@ -46,32 +34,17 @@ function handleLatestClick() {
 
 <template>
   <div class="flex flex-wrap items-center">
-    <div class="my-2 mr-1 w-[40px] text-right">时间:</div>
-    <div class="my-2 mr-1 w-[100px]">
-      <van-field
-        label-width="fit-content"
-        v-model="currentDate"
-        readonly
-        colon
-        name="datePicker"
-        @click="changeDatePicker(true)"
-      />
-      <van-popup v-model:show="showDatePicker" position="bottom">
-        <van-date-picker
-          v-model="currentDateInfo"
-          :max-date="new Date()"
-          @confirm="changeDatePicker(false, true)"
-          @cancel="changeDatePicker(false)"
-        />
-      </van-popup>
+    <div class="mr-1 w-[40px] text-right">时间:</div>
+    <div class="mr-1 w-[120px]">
+      <SizerDatePicker v-model="currentDate" :formatted="formatted" :show-arrow="false" />
     </div>
 
-    <div class="my-2 mr-2.5 w-[60px]">
+    <div class="mr-2.5 w-[60px]">
       <van-field
         v-model="currentHour"
         readonly
         colon
-        name="datePicker"
+        name="borderPicker"
         @click="changeHourPicker(true)"
       />
       <van-popup v-model:show="showHourPicker" position="bottom">
@@ -83,16 +56,18 @@ function handleLatestClick() {
       </van-popup>
     </div>
 
-    <div class="my-2 min-w-[120px] flex-1">
-      <van-button size="small" icon="arrow-left" @click="changeHour('sub')" />
-      <van-button class="!mx-1" size="small" type="primary" @click="handleLatestClick">
+    <div class="min-w-[120px] flex-1">
+      <van-button size="small" icon="arrow-left" style="height: 26px" @click="changeHour('sub')" />
+      <van-button
+        class="!mx-1"
+        size="small"
+        style="height: 26px"
+        type="primary"
+        @click="handleLatestClick"
+      >
         最新
       </van-button>
-      <van-button size="small" icon="arrow" @click="changeHour('add')" />
+      <van-button size="small" icon="arrow" style="height: 26px" @click="changeHour('add')" />
     </div>
   </div>
 </template>
-
-<style scoped>
-@import url("./sizer.css");
-</style>

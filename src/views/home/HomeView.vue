@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PageHeader } from "@/components"
+import { PageHeader } from "@/views/components"
 
 import WeatherAnalysis from "./WeatherAnalysis.vue"
 import WeatherLive from "./WeatherLive.vue"

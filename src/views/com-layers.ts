@@ -6,6 +6,7 @@ export const TDT_TK = "fb258b4c0bbf60ff7a0205b519ad9a96"
 
 export const CHENG_DU_LON_LAT = readonly([104.06543521970411, 30.577049300041224])
 
+// 地图
 export const TDT_GRAPH = {
   layerName: "TDT_GRAPH",
   isDefault: true,
@@ -13,6 +14,7 @@ export const TDT_GRAPH = {
   layerUrl: `http://t7.tianditu.com/DataServer?T=vec_w&X={x}&Y={y}&L={z}&tk=${TDT_TK}`,
 }
 
+// 地名标注
 export const TDT_CIA = {
   layerName: "TDT_CIA",
   isDefault: true,
@@ -28,6 +30,7 @@ export const TDT_ST = {
   layerUrl: `http://t7.tianditu.com/DataServer?T=img_w&X={x}&Y={y}&L={z}&tk=${TDT_TK}`,
 }
 
+// 成都位置
 export const chengDuPosition = CreateLayer.createIconLayer(
   [{ Lon: CHENG_DU_LON_LAT[0], Lat: CHENG_DU_LON_LAT[1], label: "成都" }],
   "chengduPositionLayer",
@@ -35,7 +38,5 @@ export const chengDuPosition = CreateLayer.createIconLayer(
 )
 
 export const ciaLayer = CreateLayer.createXYZLayer(TDT_CIA)
-
 export const chinaBoundary = CreateLayer.createLayerOfGeoJson(ChinaJson, "chinaBoundaryLayer")
-
 export const sichuanBoundary = CreateLayer.createLayerOfGeoJson(SiChuanJson, "sichuanBoundaryLayer")

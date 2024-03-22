@@ -2,14 +2,11 @@
 import { Map } from "ol"
 
 import { chengDuPosition, chinaBoundary, ciaLayer } from "@/views/com-layers"
+import { PageBaseMap } from "@/views/components"
 
-import BaseMap from "./MapBase.vue"
 import { legend } from "./config"
 
-interface PropType {
-  currentTickIndex?: number
-}
-const props = withDefaults(defineProps<PropType>(), { currentTickIndex: 0 })
+const currentTickIndex = defineModel<number>({ required: true })
 
 const isFirstRender = ref(true) // 是否是第一次加载
 const tifResponse = ref<any[]>([]) // CME_WindyBarb组件解析之后的结果
@@ -28,9 +25,6 @@ const tifArr = [
   "http://111.205.114.94:12301/CMEDATA/SATE/FY4B/2023090200/true_color/FY4B_true_color_20230902060000_4326.tif",
 ]
 
-// 当前真彩图
-const currentTifIndex = computed(() => props.currentTickIndex ?? 0)
-
 // 渲染卫星图层
 function renderRaster() {
   if (!mapInstance.value) return
@@ -48,7 +42,7 @@ function renderRaster() {
     }
 
     RasterRef.value.AddWindyBarb({ map: mapInstance.value, params: config }).then((res: any) => {
-      res.setOpacit(index === currentTifIndex.value ? 1 : 0)
+      res.setOpacit(index === currentTickIndex.value ? 1 : 0)
 
       if (isFirstRender.value) {
         isFirstRender.value = false
@@ -68,7 +62,7 @@ function addLayers() {
 }
 
 // 播放卫星图层
-watch(currentTifIndex, (newVal, oldVal) => {
+watch(currentTickIndex, (newVal, oldVal) => {
   tifResponse.value[newVal]?.setOpacit(1)
   tifResponse.value[oldVal]?.setOpacit(0)
 })
@@ -80,7 +74,8 @@ onMounted(() => {
 
 <template>
   <div class="h-full">
-    <BaseMap @loaded="mapLoaded" />
+    <PageBaseMap mapId="liveMonitorSatelliteMapId" :zoom="2" @loaded="mapLoaded" />
+
     <CME_RasterRender ref="RasterRef" />
   </div>
 </template>

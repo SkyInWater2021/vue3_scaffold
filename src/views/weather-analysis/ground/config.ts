@@ -1,7 +1,4 @@
 export const plotConfig = {
-  // interfaceUrl: "aa.json",
-  // icon: "left_wendu",
-  // parmas: { bbox: "", ids: [], radius: 0 },
   name: "地图填图",
   title: "地图填图",
   id: "groundStation",

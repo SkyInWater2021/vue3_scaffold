@@ -2,9 +2,9 @@
 import { cloneDeep } from "lodash-es"
 
 import { MapEvents } from "@/utils"
-import { CHENG_DU_LON_LAT, chengDuPosition } from "@/views/com-layers"
+import { CHENG_DU_LON_LAT, chengDuPosition, ciaLayer } from "@/views/com-layers"
+import { PageBaseMap } from "@/views/components"
 
-import MapBase from "./MapBase.vue"
 import { plotConfig } from "./config"
 
 interface PropType {
@@ -24,6 +24,7 @@ const isoLineInstance = ref() // 等值线渲染之后的回调值
 
 const mapLoaded = (instance: any) => {
   mapInstance.value = instance
+  mapInstance.value.addLayer(ciaLayer)
   mapInstance.value.addLayer(chengDuPosition)
 
   // 地图点击事件
@@ -45,10 +46,11 @@ const mapLoaded = (instance: any) => {
   })
 }
 
+const initZoom = 6
 function resetMapCenter() {
   const view = mapInstance.value.getView()
   view.setCenter([...CHENG_DU_LON_LAT])
-  view.setZoom(6)
+  view.setZoom(initZoom)
 }
 
 function closePopup() {
@@ -97,7 +99,7 @@ function addIsoline() {
         minNumber: {
           icon: {
             color: "rgb(0,0,255,1)", //icon的颜色
-            src: "./pic/L.png", //icon的路径
+            src: "/pic/L.png", //icon的路径
             scale: 0.08, //icon的缩放
           },
           text: {
@@ -137,7 +139,7 @@ onMounted(() => {
 
 <template>
   <div class="gis-map__wrapper h-full">
-    <MapBase @loaded="mapLoaded" />
+    <PageBaseMap map-id="weatherAnalysisGroundMapId" :zoom="initZoom" @loaded="mapLoaded" />
     <CME_IsolineRender ref="isolineRef" />
     <CME_MeteoMap ref="meteoMapRef" />
 
