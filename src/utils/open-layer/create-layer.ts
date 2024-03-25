@@ -5,7 +5,26 @@ import TileLayer from "ol/layer/Tile"
 import VectorLayer from "ol/layer/Vector"
 import VectorSource from "ol/source/Vector"
 import XYZ from "ol/source/XYZ"
-import { Fill, Icon, Stroke, Style } from "ol/style"
+import { Circle, Fill, Icon, Stroke, Style } from "ol/style"
+
+function createFeatures(data: Record<string, any>[] = [], lon: string, lat: string) {
+  const features: Feature<Point>[] = [] // 特性集合
+  const coordinateArr = { lon: [] as string[], lat: [] as string[] }
+  data.forEach(item => {
+    const lonStr = String(item[lon])
+    const latStr = String(item[lat])
+    if (coordinateArr.lon.includes(lonStr) && coordinateArr.lat.includes(latStr)) return
+    coordinateArr.lon.push(lonStr)
+    coordinateArr.lat.push(latStr)
+    const feature = new Feature({
+      geometry: new Point([parseFloat(lonStr), parseFloat(latStr)]),
+    })
+    feature.setProperties({ ...item })
+    features.push(feature)
+  })
+
+  return features
+}
 
 export class CreateLayer {
   /**
@@ -38,63 +57,11 @@ export class CreateLayer {
   }
 
   /**
-   * 根据坐标创建Icon矢量图层
-   * @param data 地图数据
-   * @param layerId 图层ID
-   * @param zIndex 图层层级
+   * 创建XYZ格式图层
+   * @param payload
+   * @param zIndex
    * @returns
    */
-  static createIconLayer(
-    data: Record<string, any>[] = [],
-    layerId: string,
-    iconUrl: string,
-    zIndex = 9,
-  ) {
-    const features: Feature<Point>[] = [] // 特性集合
-    const coordinateArr = { lon: [] as string[], lat: [] as string[] }
-
-    data.forEach(item => {
-      const lonStr = String(item.Lon)
-      const latStr = String(item.Lat)
-      if (coordinateArr.lon.includes(lonStr) && coordinateArr.lat.includes(latStr)) return
-
-      coordinateArr.lon.push(lonStr)
-      coordinateArr.lat.push(latStr)
-
-      const feature = new Feature({
-        geometry: new Point([parseFloat(lonStr), parseFloat(latStr)]),
-      })
-
-      feature.setProperties({ ...item })
-      features.push(feature)
-    })
-
-    const vectorLayer = new VectorLayer({
-      source: new VectorSource({
-        features: features,
-      }),
-      zIndex: zIndex,
-
-      style: () => {
-        const styles: Style[] = []
-        const style = new Style({
-          image: new Icon({
-            src: iconUrl,
-            anchor: [0.5, 1],
-            scale: 0.15,
-          }),
-        })
-        styles.push(style)
-
-        return styles
-      },
-    })
-
-    vectorLayer.set("id", layerId)
-
-    return vectorLayer
-  }
-
   static createXYZLayer(payload: { layerName: string; layerUrl: string }, zIndex = 9) {
     const layer = new TileLayer({
       source: new XYZ({
@@ -107,5 +74,86 @@ export class CreateLayer {
     layer.set("id", payload.layerName)
 
     return layer
+  }
+
+  /**
+   * 根据坐标创建Icon矢量图层
+   * @param data 地图数据
+   * @param layerId 图层ID
+   * @param zIndex 图层层级
+   * @returns
+   */
+  static createIconLayer(
+    data: Record<string, any>[] = [],
+    layerId: string,
+    iconUrl: string,
+    lon = "Lon",
+    lat = "Lat",
+    zIndex = 9,
+  ) {
+    const vectorLayer = new VectorLayer({
+      source: new VectorSource({
+        features: createFeatures(data, lon, lat),
+      }),
+      zIndex: zIndex,
+      style: () => {
+        const styles: Style[] = []
+        const style = new Style({
+          image: new Icon({ src: iconUrl, anchor: [0.5, 1], scale: 0.15 }),
+        })
+        styles.push(style)
+        return styles
+      },
+    })
+
+    vectorLayer.set("id", layerId)
+
+    return vectorLayer
+  }
+
+  // 创建脉冲点图层
+  static createPulseIconLayer(
+    data: Record<string, any>[] = [],
+    layerId: string,
+    lon = "Lon",
+    lat = "Lat",
+    zIndex = 9,
+  ) {
+    const features = createFeatures(data, lon, lat)
+    const vectorLayer = new VectorLayer({
+      source: new VectorSource({
+        features: features,
+      }),
+      zIndex: zIndex,
+    })
+    vectorLayer.set("id", layerId)
+    // 脉冲效果
+    const radius = 8
+    let scale = 2
+    let increment = true
+    const updateStyle = () => {
+      if (increment) {
+        scale += 0.02
+        if (scale >= radius * 0.8) increment = false
+      } else {
+        scale -= 0.03
+        if (scale <= 2) increment = true
+      }
+      features.forEach(feature => {
+        feature.setStyle(
+          new Style({
+            image: new Circle({
+              radius: radius,
+              fill: new Fill({ color: "#4ca7f8" }),
+              stroke: new Stroke({ color: "white", width: scale }),
+            }),
+          }),
+        )
+      })
+      requestAnimationFrame(updateStyle)
+    }
+    vectorLayer.once("postrender", updateStyle)
+
+    return vectorLayer
   }
 }

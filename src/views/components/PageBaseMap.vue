@@ -2,6 +2,7 @@
 import CME2D from "CME2D"
 import { Map } from "ol"
 
+import { WORLD_EXTENT } from "@/global"
 import { CHENG_DU_LON_LAT, TDT_GRAPH } from "@/views/com-layers"
 
 interface PropType {
@@ -12,7 +13,7 @@ interface PropType {
 
 const props = withDefaults(defineProps<PropType>(), {
   zoom: 4,
-  extent: () => [30, -30.5, 160, 80],
+  extent: () => WORLD_EXTENT,
 })
 
 const emit = defineEmits<{ loaded: [instance: Map] }>()

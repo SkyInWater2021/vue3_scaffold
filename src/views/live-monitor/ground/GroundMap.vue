@@ -1,8 +1,12 @@
 <script lang="ts" setup>
+import { useHomeStore } from "@/store/home"
+import { CreateLayer } from "@/utils"
 import { chengDuPosition, ciaLayer, sichuanBoundary } from "@/views/com-layers"
 import { PageBaseMap } from "@/views/components"
 
 import tempData from "./tempData.json"
+
+const store = useHomeStore()
 
 const singlePointRef = ref()
 const mapInstance = ref() // 地图实例
@@ -11,6 +15,11 @@ const mapLoaded = (instance: any) => {
   mapInstance.value.addLayer(ciaLayer)
   mapInstance.value.addLayer(chengDuPosition)
   mapInstance.value.addLayer(sichuanBoundary)
+  const currentLivePosition = CreateLayer.createPulseIconLayer(
+    [{ Lon: store.currentLivePosition[0], Lat: store.currentLivePosition[1], label: "当前位置" }],
+    "currentLivePosition",
+  )
+  mapInstance.value.addLayer(currentLivePosition)
 }
 
 function addWebGLPoint() {
