@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { dateFormat } from "@/utils"
+import { dateFormat } from "@/utils/format-date"
 import { PageLoading, TimeShaft } from "@/views/components"
 
 import RadarMap from "./RadarMap.vue"

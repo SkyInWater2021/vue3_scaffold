@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { dateOffset } from "@/utils"
+import { dateOffset } from "@/utils/format-date"
 import type { CheckBarInfo, CheckBoxValue, DropData } from "@/views/components"
 import {
   PageHeader,
@@ -22,7 +22,9 @@ const layersCheckInfo = reactive<CheckBarInfo>({
 
 const dropData = ref<DropData>({}) // 下拉框信息
 const currentDate = ref(dateOffset({ format: "YYYY-MM-DD HH" })) // 时间信息
-const currentChecks = ref<CheckBoxValue[]>(["normal"]) // 站点筛选信息
+const currentChecks = ref<CheckBoxValue[]>(["normal", "error", "dubious"]) // 站点筛选信息
+
+const isShowOverlay = ref(true)
 </script>
 
 <template>
@@ -37,7 +39,7 @@ const currentChecks = ref<CheckBoxValue[]>(["normal"]) // 站点筛选信息
       </template>
     </PageHeader>
 
-    <div class="mb-2">
+    <div class="relative mb-2">
       <SizerDropMenu v-model="dropData" :config="dropMenus" />
       <SizerCheckBar v-model="classifyCheckInfo" :config="checkBarClassify" class="my-2" />
       <SizerCheckBar
@@ -45,9 +47,15 @@ const currentChecks = ref<CheckBoxValue[]>(["normal"]) // 站点筛选信息
         class="w-2/5 max-w-[200px]"
         :config="checkLayerTypes"
       />
+
+      <van-checkbox v-model="isShowOverlay" shape="square" class="absolute bottom-0 right-2">
+        功能
+      </van-checkbox>
     </div>
 
-    <GroundMap class="flex-1" />
+    <div class="relative flex-1">
+      <GroundMap class="h-full" :showOverlay="isShowOverlay" :showTypes="currentChecks" />
+    </div>
 
     <div class="px-2 pb-2">
       <SizerDatePicker v-model="currentDate" />

@@ -1,5 +1,5 @@
 import { Response } from "@/types"
-import { requestInstance } from "@/utils"
+import { requestInstance } from "@/utils/request"
 
 import type { WeatherData } from "./types"
 

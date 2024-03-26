@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { dateOffset } from "@/utils"
+import { dateOffset } from "@/utils/format-date"
 import type { CheckBarInfo, DropData } from "@/views/components"
 import { PageHeader, SizerCheckBar, SizerDatePicker, SizerDropMenu } from "@/views/components"
 

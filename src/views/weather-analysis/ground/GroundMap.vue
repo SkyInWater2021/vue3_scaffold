@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { cloneDeep } from "lodash-es"
 
-import { MapEvents } from "@/utils"
-import { CHENG_DU_LON_LAT, chengDuPosition, ciaLayer } from "@/views/com-layers"
+import { CHENGDU_LL } from "@/global/constants"
+import { ComLayers } from "@/global/layers"
+import { ManageMapEvents } from "@/utils/open-layer"
 import { PageBaseMap } from "@/views/components"
 
 import { plotConfig } from "./config"
@@ -24,12 +25,12 @@ const isoLineInstance = ref() // 等值线渲染之后的回调值
 
 const mapLoaded = (instance: any) => {
   mapInstance.value = instance
-  mapInstance.value.addLayer(ciaLayer)
-  mapInstance.value.addLayer(chengDuPosition)
+  mapInstance.value.addLayer(ComLayers.getCiaLayer())
+  mapInstance.value.addLayer(ComLayers.getChengDuLayer())
 
   // 地图点击事件
-  mapInstance.value!.on("click", (evt: any) => {
-    popupInfo.value = MapEvents.mapPointClick(mapInstance.value as any, evt, {
+  mapInstance.value!.on("singleclick", (evt: any) => {
+    popupInfo.value = ManageMapEvents.mapPointClick(mapInstance.value as any, evt, {
       popup: popupRef.value!,
     })
     if (popupInfo.value?.overlay) {
@@ -42,14 +43,14 @@ const mapLoaded = (instance: any) => {
   })
 
   mapInstance.value!.on("pointermove", (evt: any) => {
-    MapEvents.mapPointHover(mapInstance.value, evt)
+    ManageMapEvents.mapPointHover(mapInstance.value, evt)
   })
 }
 
 const initZoom = 6
 function resetMapCenter() {
   const view = mapInstance.value.getView()
-  view.setCenter([...CHENG_DU_LON_LAT])
+  view.setCenter([...CHENGDU_LL])
   view.setZoom(initZoom)
 }
 
@@ -206,3 +207,4 @@ onMounted(() => {
   display: flex;
 }
 </style>
+@/global/com-layers

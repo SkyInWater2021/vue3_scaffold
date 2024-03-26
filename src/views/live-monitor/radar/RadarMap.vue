@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { Map } from "ol"
 
-import { CHENG_DU_LON_LAT, chengDuPosition, ciaLayer, sichuanBoundary } from "@/views/com-layers"
+import { CHENGDU_LL } from "@/global/constants"
+import { ComLayers } from "@/global/layers"
 import { PageBaseMap } from "@/views/components"
 
 const initZoom = 5
@@ -16,16 +17,16 @@ const mapLoaded = (instance: Map) => {
 }
 
 function addLayers() {
-  mapInstance.value?.addLayer(ciaLayer)
-  mapInstance.value?.addLayer(chengDuPosition)
-  mapInstance.value?.addLayer(sichuanBoundary)
+  mapInstance.value?.addLayer(ComLayers.getCiaLayer())
+  mapInstance.value?.addLayer(ComLayers.getChengDuLayer())
+  mapInstance.value?.addLayer(ComLayers.getSichuanBoundaryLayer())
   addSpot()
 }
 
 function resetMapCenter() {
   if (!mapInstance.value) return
   const view = mapInstance.value.getView()
-  view.setCenter([...CHENG_DU_LON_LAT])
+  view.setCenter([...CHENGDU_LL])
   view.setZoom(initZoom)
 }
 
@@ -79,3 +80,4 @@ function addSpot() {
     </div>
   </div>
 </template>
+@/global/com-layers

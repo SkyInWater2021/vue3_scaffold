@@ -2,7 +2,9 @@
 import { homeApi } from "@/api/home"
 import type { Daily, Now } from "@/api/home/types"
 import { useHomeStore } from "@/store/home"
-import { dateFormat, getCnWeek, getWeatherIcon, traditionalDate } from "@/utils"
+import { dateFormat, getCnWeek } from "@/utils/format-date"
+import { traditionalDate } from "@/utils/format-date-traditional"
+import { getWeatherIcon } from "@/utils/get-icons"
 import { DividerLine, PageLoading } from "@/views/components"
 
 const homeStore = useHomeStore()

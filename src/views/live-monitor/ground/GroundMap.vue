@@ -1,79 +1,63 @@
 <script lang="ts" setup>
-import { useHomeStore } from "@/store/home"
-import { CreateLayer } from "@/utils"
-import { chengDuPosition, ciaLayer, sichuanBoundary } from "@/views/com-layers"
+import { Map } from "ol"
+
+import { ComLayers } from "@/global/layers"
+import type { CheckBoxValue } from "@/views/components"
 import { PageBaseMap } from "@/views/components"
 
+import MapOverlay from "./MapOverlay.vue"
+import { createPointLayer } from "./get-point-layer"
 import tempData from "./tempData.json"
 
-const store = useHomeStore()
+const POINT_LAYER_ID = "liveMonitorThunderLayer"
 
-const singlePointRef = ref()
-const mapInstance = ref() // 地图实例
+const props = defineProps<{
+  showOverlay: boolean
+  showTypes: CheckBoxValue[]
+}>()
+
+const pointTypes = new Set<string>([])
+
+const mapInstance = ref<Map>()
 const mapLoaded = (instance: any) => {
   mapInstance.value = instance
-  mapInstance.value.addLayer(ciaLayer)
-  mapInstance.value.addLayer(chengDuPosition)
-  mapInstance.value.addLayer(sichuanBoundary)
-  const currentLivePosition = CreateLayer.createPulseIconLayer(
-    [{ Lon: store.currentLivePosition[0], Lat: store.currentLivePosition[1], label: "当前位置" }],
-    "currentLivePosition",
-  )
-  mapInstance.value.addLayer(currentLivePosition)
+  if (!mapInstance.value) return
+  mapInstance.value.addLayer(ComLayers.getCiaLayer())
+  mapInstance.value.addLayer(ComLayers.getChengDuLayer())
+  mapInstance.value.addLayer(ComLayers.getSichuanBoundaryLayer())
+
+  const layer = createPointLayer(tempData, pointTypes, POINT_LAYER_ID)
+  mapInstance.value.addLayer(layer)
 }
 
-function addWebGLPoint() {
-  const colorFiled = "PRE_6h" //图片颜色渲染字段
-  const pngField = "shape" //不同类型对应的不同的图标
-  let style = {
-    "icon-src": "/pic/ufo_shapes.png", //图片对应的位置
-    "icon-color": [
-      "interpolate",
-      ["linear"],
-      ["get", colorFiled],
-      5,
-      [0, 0, 255],
-      10,
-      [250, 255, 100],
-      20,
-      [255, 160, 110],
-      25,
-      [0, 255, 0],
-      30,
-      [255, 255, 0],
-      35,
-      [255, 255, 200],
-      40,
-      [255, 0, 255],
-      70,
-      [100, 100, 100],
-    ],
-    "icon-offset": ["match", ["get", pngField], "shape", [0, 32], [32, 0]],
-    "icon-size": [32, 32],
-    "icon-scale": 0.4,
+function getLayerById(layerId: string) {
+  if (!mapInstance.value) return
+  var layers = mapInstance.value.getLayers().getArray()
+  for (let i = 0; i < layers.length; i++) {
+    if (layers[i].get("id") === layerId) return layers[i]
   }
-  let config = {
-    map: mapInstance.value,
-    config: {
-      style: style,
-      features: tempData,
-      lon: "Lon",
-      lat: "Lat",
-      pngField: "shape",
-      filedName: colorFiled,
-    },
-  }
-  singlePointRef.value.addWebGLCutsomPointLayer(config)
+  return null // 如果未找到匹配图层则返回null
 }
 
 onMounted(() => {
-  addWebGLPoint()
+  watch(
+    () => props.showTypes.length,
+    () => {
+      pointTypes.clear()
+      props.showTypes.forEach(item => pointTypes.add(String(item)))
+      pointTypes.add("pointNumber")
+      const layer = getLayerById(POINT_LAYER_ID)
+      layer?.changed()
+    },
+    { immediate: true },
+  )
 })
 </script>
 
 <template>
   <div>
     <PageBaseMap mapId="liveMonitorGroundMapId" @loaded="mapLoaded" />
-    <CME_MeteoSinglePoint ref="singlePointRef" />
+    <MapOverlay v-if="mapInstance" v-show="showOverlay" :mapInstance="mapInstance" />
   </div>
 </template>
+@/global/com-layers

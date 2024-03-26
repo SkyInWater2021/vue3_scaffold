@@ -1,6 +1,6 @@
 export type Primitive = string | number | boolean | undefined | null | symbol
 
-export interface SelectOption<T = string | number, K = Record<string, Primitive>> {
+export interface SelectItem<T = string | number, K = Record<string, Primitive>> {
   label: string
   value: T
   extra?: K

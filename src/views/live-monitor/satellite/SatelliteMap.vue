@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Map } from "ol"
 
-import { chengDuPosition, chinaBoundary, ciaLayer } from "@/views/com-layers"
+import { ComLayers } from "@/global/layers"
 import { PageBaseMap } from "@/views/components"
 
 import { legend } from "./config"
@@ -56,9 +56,9 @@ function renderRaster() {
 
 // 添加其他图层
 function addLayers() {
-  mapInstance.value?.addLayer(chinaBoundary)
-  mapInstance.value?.addLayer(chengDuPosition)
-  mapInstance.value?.addLayer(ciaLayer)
+  mapInstance.value?.addLayer(ComLayers.getChinaBoundaryLayer())
+  mapInstance.value?.addLayer(ComLayers.getChengDuLayer())
+  mapInstance.value?.addLayer(ComLayers.getCiaLayer())
 }
 
 // 播放卫星图层
@@ -79,3 +79,4 @@ onMounted(() => {
     <CME_RasterRender ref="RasterRef" />
   </div>
 </template>
+@/global/com-layers

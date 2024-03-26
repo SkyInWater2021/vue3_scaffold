@@ -130,8 +130,8 @@ export const checkLayerTypes = [
 
 export const checkBoxItems = [
   { value: "stationName", text: "站名" },
-  { value: "stationNum", text: "站号" },
+  { value: "stationNumber", text: "站号" },
   { value: "normal", text: "正确" },
-  { value: "error", text: "错误", disabled: true },
-  { value: "dubious", text: "可疑", disabled: true },
+  { value: "error", text: "错误" },
+  { value: "dubious", text: "可疑" },
 ]

@@ -7,26 +7,28 @@ import VectorSource from "ol/source/Vector"
 import XYZ from "ol/source/XYZ"
 import { Circle, Fill, Icon, Stroke, Style } from "ol/style"
 
-function createFeatures(data: Record<string, any>[] = [], lon: string, lat: string) {
-  const features: Feature<Point>[] = [] // 特性集合
-  const coordinateArr = { lon: [] as string[], lat: [] as string[] }
-  data.forEach(item => {
-    const lonStr = String(item[lon])
-    const latStr = String(item[lat])
-    if (coordinateArr.lon.includes(lonStr) && coordinateArr.lat.includes(latStr)) return
-    coordinateArr.lon.push(lonStr)
-    coordinateArr.lat.push(latStr)
-    const feature = new Feature({
-      geometry: new Point([parseFloat(lonStr), parseFloat(latStr)]),
-    })
-    feature.setProperties({ ...item })
-    features.push(feature)
-  })
-
-  return features
-}
-
 export class CreateLayer {
+  static createFeatures(data: Record<string, any>[], lon: string, lat: string) {
+    const features: Feature<Point>[] = [] // 特性集合
+    if (data && Array.isArray(data)) {
+      const coordinateArr = { lon: [] as string[], lat: [] as string[] }
+      data.forEach(item => {
+        const lonStr = String(item[lon])
+        const latStr = String(item[lat])
+        if (coordinateArr.lon.includes(lonStr) && coordinateArr.lat.includes(latStr)) return
+        coordinateArr.lon.push(lonStr)
+        coordinateArr.lat.push(latStr)
+        const feature = new Feature({
+          geometry: new Point([parseFloat(lonStr), parseFloat(latStr)]),
+        })
+        feature.setProperties({ ...item })
+        features.push(feature)
+      })
+    }
+
+    return features
+  }
+
   /**
    * 根据GeoJson创建矢量图层
    * @param geoJson 地理json
@@ -93,7 +95,7 @@ export class CreateLayer {
   ) {
     const vectorLayer = new VectorLayer({
       source: new VectorSource({
-        features: createFeatures(data, lon, lat),
+        features: this.createFeatures(data, lon, lat),
       }),
       zIndex: zIndex,
       style: () => {
@@ -115,11 +117,11 @@ export class CreateLayer {
   static createPulseIconLayer(
     data: Record<string, any>[] = [],
     layerId: string,
+    zIndex = 9,
     lon = "Lon",
     lat = "Lat",
-    zIndex = 9,
   ) {
-    const features = createFeatures(data, lon, lat)
+    const features = this.createFeatures(data, lon, lat)
     const vectorLayer = new VectorLayer({
       source: new VectorSource({
         features: features,

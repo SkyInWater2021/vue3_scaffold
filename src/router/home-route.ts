@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router"
 
-import { getMenuIcon } from "@/utils"
+import { getMenuIcon } from "@/utils/get-icons"
 
 interface RouteMeta {
   title: string

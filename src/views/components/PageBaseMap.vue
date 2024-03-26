@@ -2,8 +2,8 @@
 import CME2D from "CME2D"
 import { Map } from "ol"
 
-import { WORLD_EXTENT } from "@/global"
-import { CHENG_DU_LON_LAT, TDT_GRAPH } from "@/views/com-layers"
+import { CHENGDU_LL, WORLD_EXTENT } from "@/global/constants"
+import { TDT_GRAPH } from "@/global/layers"
 
 interface PropType {
   mapId: string
@@ -13,7 +13,7 @@ interface PropType {
 
 const props = withDefaults(defineProps<PropType>(), {
   zoom: 4,
-  extent: () => WORLD_EXTENT,
+  extent: () => [...WORLD_EXTENT],
 })
 
 const emit = defineEmits<{ loaded: [instance: Map] }>()
@@ -26,10 +26,12 @@ function initCMEMap() {
       extent: props.extent,
       zoom: props.zoom,
       minZoom: 1,
-      center: [...CHENG_DU_LON_LAT],
+      center: [...CHENGDU_LL],
     },
     baseLayers: [TDT_GRAPH],
   })
+
+  window.addEventListener("resize", () => instance.updateSize())
 
   emit("loaded", instance)
 }
@@ -40,3 +42,4 @@ onMounted(() => initCMEMap())
 <template>
   <div :id="mapId" class="h-full"></div>
 </template>
+@/global/com-layers

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { dateOffset } from "@/utils"
+import { dateOffset } from "@/utils/format-date"
 
 interface PropType {
   formatted?: "YYYY-MM-DD HH" | "YYYY-MM-DD"
