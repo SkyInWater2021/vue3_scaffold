@@ -32,4 +32,3 @@ const mapLoaded = (instance: any) => {
     </div>
   </div>
 </template>
-@/global/com-layers

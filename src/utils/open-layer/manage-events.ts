@@ -1,10 +1,6 @@
 import { Map, MapBrowserEvent, Overlay } from "ol"
 
 export class ManageMapEvents {
-  /**
-   * 站点点击事件
-   *
-   */
   static mapPointClick = (
     mapInstance: Map,
     evt: MapBrowserEvent<MouseEvent>,
@@ -45,7 +41,6 @@ export class ManageMapEvents {
     return { pointData, location, overlay }
   }
 
-  // 站点移入事件
   static mapPointHover = (mapInstance: Map, evt: MapBrowserEvent<MouseEvent>) => {
     const targetElement = mapInstance.getTargetElement()
     targetElement.style.cursor = mapInstance.hasFeatureAtPixel(evt.pixel) ? "pointer" : "grab"

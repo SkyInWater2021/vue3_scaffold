@@ -21,7 +21,23 @@ export const TDT_CIA = {
   layerUrl: `http://t7.tianditu.com/DataServer?T=cva_w&X={x}&Y={y}&L={z}&tk=${TDT_TK}`,
 }
 
+// 地形渲染
+export const TDT_TERRAIN = {
+  layerName: "TDT_CIA",
+  isDefault: true,
+  layerType: "TileXYZ",
+  layerUrl: `http://t7.tianditu.com/DataServer?T=ter_w&X={x}&Y={y}&L={z}&tk=${TDT_TK}`,
+}
+
 export class ComLayers {
+  static getGraphLayer = () => {
+    return CreateLayer.createXYZLayer(TDT_GRAPH)
+  }
+
+  static getTerrainLayer = () => {
+    return CreateLayer.createXYZLayer(TDT_TERRAIN)
+  }
+
   static getCiaLayer = () => {
     return CreateLayer.createXYZLayer(TDT_CIA)
   }
@@ -47,7 +63,7 @@ export class ComLayers {
   }
 
   static getChengDuLayer = () => {
-    return CreateLayer.createIconLayer(
+    return CreateLayer.createLayerOfIcon(
       [{ Lon: CHENGDU_LL[0], Lat: CHENGDU_LL[1], label: "成都" }],
       "chengduPositionLayer",
       new URL("@/assets/map-icons/pt-red.svg", import.meta.url).href,

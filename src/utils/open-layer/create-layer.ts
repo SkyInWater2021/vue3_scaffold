@@ -29,14 +29,23 @@ export class CreateLayer {
     return features
   }
 
-  /**
-   * 根据GeoJson创建矢量图层
-   * @param geoJson 地理json
-   * @param layerId 图层ID
-   * @param zIndex 图层层级
-   * @returns 矢量图层
-   */
-  static createLayerOfGeoJson(geoJson: any, layerId: string, zIndex = 9) {
+  static createLayerOfGeoJson(
+    geoJson: any,
+    layerId: string,
+    config?: {
+      zIndex?: number
+      strokeColor?: string
+      strokeWidth?: number
+      fillColor?: string
+    },
+  ) {
+    const {
+      zIndex = 9,
+      strokeColor = "#c63520",
+      strokeWidth = 1,
+      fillColor = "transparent",
+    } = config ?? {}
+
     const layer = new VectorLayer({
       source: new VectorSource({
         features: new GeoJSON().readFeatures(geoJson, {
@@ -46,11 +55,14 @@ export class CreateLayer {
       }),
       style: () => {
         return new Style({
-          fill: new Fill({ color: "transparent" }),
-          stroke: new Stroke({ color: "#c63520", width: 1 }),
+          fill: new Fill({ color: fillColor }),
+          stroke: new Stroke({
+            color: strokeColor,
+            width: strokeWidth,
+          }),
         })
       },
-      zIndex,
+      zIndex: zIndex ?? 9,
     })
 
     layer.set("id", layerId)
@@ -58,17 +70,17 @@ export class CreateLayer {
     return layer
   }
 
-  /**
-   * 创建XYZ格式图层
-   * @param payload
-   * @param zIndex
-   * @returns
-   */
-  static createXYZLayer(payload: { layerName: string; layerUrl: string }, zIndex = 9) {
+  static createXYZLayer(
+    payload: { layerName: string; layerUrl: string },
+    config?: {
+      zIndex?: number
+    },
+  ) {
+    const { zIndex = 9 } = config ?? {}
     const layer = new TileLayer({
       source: new XYZ({
-        url: payload.layerUrl,
         tilePixelRatio: window.devicePixelRatio > 1 ? 2 : 1,
+        url: payload.layerUrl,
       }),
       zIndex,
     })
@@ -78,21 +90,18 @@ export class CreateLayer {
     return layer
   }
 
-  /**
-   * 根据坐标创建Icon矢量图层
-   * @param data 地图数据
-   * @param layerId 图层ID
-   * @param zIndex 图层层级
-   * @returns
-   */
-  static createIconLayer(
+  static createLayerOfIcon(
     data: Record<string, any>[] = [],
     layerId: string,
-    iconUrl: string,
-    lon = "Lon",
-    lat = "Lat",
-    zIndex = 9,
+    config: {
+      iconUrl: string
+      lon?: string
+      lat?: string
+      zIndex: number
+    },
   ) {
+    const { iconUrl, lon = "Lon", lat = "Lat", zIndex = 9 } = config
+
     const vectorLayer = new VectorLayer({
       source: new VectorSource({
         features: this.createFeatures(data, lon, lat),
@@ -117,18 +126,20 @@ export class CreateLayer {
   static createPulseIconLayer(
     data: Record<string, any>[] = [],
     layerId: string,
-    zIndex = 9,
-    lon = "Lon",
-    lat = "Lat",
+    config?: {
+      lon?: string
+      lat?: string
+      zIndex?: number
+    },
   ) {
+    const { lon = "Lon", lat = "Lat", zIndex = 9 } = config ?? {}
     const features = this.createFeatures(data, lon, lat)
     const vectorLayer = new VectorLayer({
-      source: new VectorSource({
-        features: features,
-      }),
+      source: new VectorSource({ features: features }),
       zIndex: zIndex,
     })
     vectorLayer.set("id", layerId)
+
     // 脉冲效果
     const radius = 8
     let scale = 2
@@ -154,7 +165,7 @@ export class CreateLayer {
       })
       requestAnimationFrame(updateStyle)
     }
-    vectorLayer.once("postrender", updateStyle)
+    updateStyle()
 
     return vectorLayer
   }

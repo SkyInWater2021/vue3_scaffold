@@ -2,12 +2,15 @@
 import { Locale } from "vant"
 import zhCN from "vant/es/locale/lang/zh-CN"
 
+import { useHomeStore } from "./store/home"
+
 Locale.use("zh-CN", zhCN)
 
+// 1. 判断是否是第一次加载,第一次加载不应用过渡动画
 const isFirstLoad = ref(true)
 const handleEnter = () => (isFirstLoad.value = false)
 
-// 移动端设置视口高度,不能使用100vh
+// 2. 移动端设置视口高度,不能使用100vh
 const documentHeight = () => {
   const doc = document.documentElement
   doc.style.setProperty("--doc-height", `${window.innerHeight}px`)
@@ -15,21 +18,21 @@ const documentHeight = () => {
 window.addEventListener("resize", documentHeight)
 documentHeight()
 
-// 禁止左右滑动控制前进后退
-document.addEventListener("touchstart", handleTouchStart, { passive: false })
-document.addEventListener("touchmove", handleTouchMove, { passive: false })
+// 3. 禁止左右滑动控制前进后退
 let startX: number
-function handleTouchStart(e: TouchEvent) {
-  startX = e.touches[0].pageX
-}
-function handleTouchMove(e: TouchEvent) {
+const handleTouchStart = (e: TouchEvent) => (startX = e.touches[0].pageX)
+const handleTouchMove = (e: TouchEvent) => {
   const moveX = e.touches[0].pageX
   const diffX = moveX - startX
-  if (Math.abs(diffX) > 5) {
-    // 假定滑动阈值为5，可按需调整
-    e.preventDefault()
-  }
+  // 假定滑动阈值为5，可按需调整
+  if (Math.abs(diffX) > 5) e.preventDefault()
 }
+document.addEventListener("touchstart", handleTouchStart, { passive: false })
+document.addEventListener("touchmove", handleTouchMove, { passive: false })
+
+// 每次加载页面,请求当前位置的坐标(不在首页设置是为了用户在任何页面刷新时都能获取到坐标)
+const homeStore = useHomeStore()
+homeStore.fetchLL()
 </script>
 
 <template>

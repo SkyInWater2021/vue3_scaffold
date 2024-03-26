@@ -42,4 +42,3 @@ onMounted(() => initCMEMap())
 <template>
   <div :id="mapId" class="h-full"></div>
 </template>
-@/global/com-layers

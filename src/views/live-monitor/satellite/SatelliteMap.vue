@@ -79,4 +79,3 @@ onMounted(() => {
     <CME_RasterRender ref="RasterRef" />
   </div>
 </template>
-@/global/com-layers

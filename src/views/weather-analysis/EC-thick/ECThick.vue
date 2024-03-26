@@ -10,6 +10,7 @@ const mapLoaded = (instance: any) => {
     [{ Lon: CHENGDU_LL[0], Lat: CHENGDU_LL[1] }],
     "DEMO_PLUSE_POINT",
   )
+
   mapInstance.value.addLayer(layer)
 }
 </script>

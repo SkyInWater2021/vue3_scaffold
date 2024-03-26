@@ -60,4 +60,3 @@ onMounted(() => {
     <MapOverlay v-if="mapInstance" v-show="showOverlay" :mapInstance="mapInstance" />
   </div>
 </template>
-@/global/com-layers

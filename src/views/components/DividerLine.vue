@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-defineProps<{
-  vertical?: boolean
-}>()
+defineProps<{ vertical?: boolean }>()
 </script>
 
 <template>

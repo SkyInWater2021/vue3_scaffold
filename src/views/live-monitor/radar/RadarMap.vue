@@ -80,4 +80,3 @@ function addSpot() {
     </div>
   </div>
 </template>
-@/global/com-layers

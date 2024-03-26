@@ -12,9 +12,7 @@ export function createThunderLayer(data: any) {
     zIndex: 9,
     style: feature => {
       const styles: Style[] = []
-
       const value = feature.getProperties()
-
       const iconUrl =
         Number(value.PRS_Change_3h) > 0
           ? new URL("@/assets/map-icons/thunder+.svg", import.meta.url).href
@@ -25,6 +23,7 @@ export function createThunderLayer(data: any) {
       })
 
       styles.push(style)
+
       return styles
     },
   })

@@ -1,12 +1,8 @@
 <script lang="ts" setup>
 import { Map, View } from "ol"
-import { Tile } from "ol/layer"
-import { OSM } from "ol/source"
 
-import { CHENGDU_LL } from "@/global/constants"
+import { CHENGDU_LL, WORLD_EXTENT } from "@/global/constants"
 import { ComLayers } from "@/global/layers"
-
-const chengduLayer = ComLayers.getChengDuLayer()
 
 const mapId = "demoMapContainer"
 const mapInstance = ref<Map>()
@@ -17,12 +13,13 @@ onMounted(() => {
       projection: "EPSG:4326",
       center: [...CHENGDU_LL],
       zoom: 5,
+      minZoom: 3,
+      enableRotation: false,
+      extent: [...WORLD_EXTENT],
+      multiWorld: false,
+      // constrainOnlyCenter: true,
     }),
-    layers: [
-      new Tile({
-        source: new OSM(),
-      }),
-    ],
+    layers: [ComLayers.getTerrainLayer()],
     controls: [],
     // interactions: [],
     // maxTilesLoading: 默认值 16
@@ -31,16 +28,17 @@ onMounted(() => {
   })
 
   mapInstance.value.addLayer(ComLayers.getCiaLayer())
-  mapInstance.value.addLayer(chengduLayer)
-  console.log(chengduLayer)
-  console.log(mapInstance.value.getAllLayers(), "111111")
+  mapInstance.value.addLayer(ComLayers.getLivePositionLayer())
 
   setTimeout(() => {
     // ..
-  }, 2000)
+  }, 3000)
 })
 
-function handleBtnClick() {}
+function handleBtnClick() {
+  const view = mapInstance.value?.getView()
+  console.log(view?.getResolution())
+}
 </script>
 
 <template>
@@ -49,4 +47,3 @@ function handleBtnClick() {}
     <div :id="mapId" class="flex-1"></div>
   </div>
 </template>
-@/global/com-layers

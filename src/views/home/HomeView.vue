@@ -9,6 +9,7 @@ import WeatherLive from "./WeatherLive.vue"
   <div class="flex h-full flex-col bg-[#5677a6cc]">
     <PageHeader class="!bg-transparent">
       <template #left><van-icon name="plus" :size="22" /></template>
+
       <template #right>
         <van-icon name="scan" :size="22" class="mr-2" />
         <van-icon name="setting-o" :size="22" />

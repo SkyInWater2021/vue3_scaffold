@@ -207,4 +207,3 @@ onMounted(() => {
   display: flex;
 }
 </style>
-@/global/com-layers
