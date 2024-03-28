@@ -2,7 +2,7 @@ import { ServerOptions } from "vite"
 
 export function useServe(env: Record<string, string>) {
   const option: ServerOptions = {
-    // hmr: true,
+    hmr: false,
     // open: true,
     host: true,
     port: 9999,

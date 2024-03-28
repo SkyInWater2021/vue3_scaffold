@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ComLayers } from "@/global/layers"
+import { ManageLayer } from "@/utils/open-layer"
 
 const props = defineProps<{
   mapInstance: any
@@ -28,8 +29,10 @@ function handlePositionClick() {
 }
 
 function handleBoundaryClick() {
+  const sichuanBoundary = ManageLayer.getLayerById(props.mapInstance, "sichuanBoundaryLayer")
   showBoundary.value = !showBoundary.value
   sichuanCountryBoundary.setVisible(showBoundary.value)
+  sichuanBoundary?.setVisible(!showBoundary.value)
 }
 </script>
 

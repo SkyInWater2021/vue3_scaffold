@@ -14,7 +14,8 @@
     "lint:stylelint": "stylelint \"./**/*.{css,less,vue,html}\" --fix",
     "lint:prettier": "prettier --write \"./**/*.{html,vue,ts,js,json,md,less,css}\"",
     "commit": "git cz",
-    "installDev": "npm install --registry=http://220.243.128.35:8081/repository/npm-release/"
+    "installDev": "npm install --registry=http://220.243.128.35:8081/repository/npm-release/",
+    "installDev1": "npm install --registry=http://220.243.128.35:8081/repository/npm-public/"
   },
   "optionalDependencies": {
     "@turf/turf": "^6.5.0",

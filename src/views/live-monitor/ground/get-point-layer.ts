@@ -37,7 +37,7 @@ export function createPointLayer(data: any, showTypes: Set<string> = new Set(), 
           image: new Icon({
             src: url,
             anchor: [0.5, 1],
-            scale: 0.15,
+            scale: 0.18,
           }),
         })
       }
@@ -79,7 +79,7 @@ export function createPointLayer(data: any, showTypes: Set<string> = new Set(), 
           font: "sans-serif",
           rotation: 0,
           offsetX: 0,
-          offsetY: -20,
+          offsetY: -25,
         })
       }
 
@@ -93,8 +93,8 @@ export function createPointLayer(data: any, showTypes: Set<string> = new Set(), 
           fontSize: "10px",
           font: "sans-serif",
           rotation: 0,
-          offsetX: 15,
-          offsetY: -8,
+          offsetX: 18,
+          offsetY: -12,
         })
       }
 

@@ -7,6 +7,8 @@ import VectorSource from "ol/source/Vector"
 import XYZ from "ol/source/XYZ"
 import { Circle, Fill, Icon, Stroke, Style } from "ol/style"
 
+import type { FeatureLike } from "ol/Feature"
+
 export class CreateLayer {
   static createFeatures(data: Record<string, any>[], lon: string, lat: string) {
     const features: Feature<Point>[] = [] // 特性集合
@@ -52,7 +54,9 @@ export class CreateLayer {
           dataProjection: "EPSG:4326", // 数据源坐标系
           featureProjection: "EPSG:4326", // 目标坐标系
         }),
+        overlaps: false,
       }),
+
       style: () => {
         return new Style({
           fill: new Fill({ color: fillColor }),
@@ -94,21 +98,22 @@ export class CreateLayer {
     data: Record<string, any>[] = [],
     layerId: string,
     config: {
-      iconUrl: string
+      setUrl: (feature: FeatureLike) => string
       lon?: string
       lat?: string
-      zIndex: number
+      zIndex?: number
     },
   ) {
-    const { iconUrl, lon = "Lon", lat = "Lat", zIndex = 9 } = config
+    const { setUrl, lon = "Lon", lat = "Lat", zIndex = 9 } = config
 
     const vectorLayer = new VectorLayer({
       source: new VectorSource({
         features: this.createFeatures(data, lon, lat),
       }),
       zIndex: zIndex,
-      style: () => {
+      style: feature => {
         const styles: Style[] = []
+        const iconUrl = setUrl(feature)
         const style = new Style({
           image: new Icon({ src: iconUrl, anchor: [0.5, 1], scale: 0.15 }),
         })

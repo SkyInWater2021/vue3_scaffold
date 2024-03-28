@@ -66,7 +66,7 @@ export class ComLayers {
     return CreateLayer.createLayerOfIcon(
       [{ Lon: CHENGDU_LL[0], Lat: CHENGDU_LL[1], label: "成都" }],
       "chengduPositionLayer",
-      new URL("@/assets/map-icons/pt-red.svg", import.meta.url).href,
+      { setUrl: () => new URL("@/assets/map-icons/pt-red.svg", import.meta.url).href },
     )
   }
 }
